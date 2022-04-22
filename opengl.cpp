@@ -38,6 +38,27 @@ struct Character
         this->current_pos.x+=dx;
         this->current_pos.y+=dy;
     }
+
+    void draw(int filled)
+    {
+        if(filled) 
+        {
+            glBegin(GL_QUADS);
+        }
+        else 
+        {
+            glBegin(GL_LINE_LOOP);
+        }
+        //glTexCoord2f(0.,0.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
+        //glTexCoord2f(1.,0.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
+        //glTexCoord2f(1.,1.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
+        //glTexCoord2f(0.,1.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
+        glEnd(); 
+    }
 };
 
 
@@ -117,27 +138,6 @@ Character createCharacter(int height, int width, Position pos, Position final_po
     chara.end_pos.x = final_pos.x;
     chara.end_pos.y = final_pos.y;
     return chara;
-}
-
-void drawRectangle(int filled, Character pers) 
-{
-    if(filled) 
-    {
-        glBegin(GL_QUADS);
-    }
-    else 
-    {
-        glBegin(GL_LINE_LOOP);
-    }
-    //glTexCoord2f(0.,0.);
-    glVertex2f( pers.current_pos.x-0.5*pers.width, pers.current_pos.y+0.5*pers.height);
-    //glTexCoord2f(1.,0.);
-    glVertex2f( pers.current_pos.x+0.5*pers.width, pers.current_pos.y+0.5*pers.height);
-    //glTexCoord2f(1.,1.);
-    glVertex2f( pers.current_pos.x+0.5*pers.width, pers.current_pos.y-0.5*pers.height);
-    //glTexCoord2f(0.,1.);
-    glVertex2f( pers.current_pos.x-0.5*pers.width, pers.current_pos.y-0.5*pers.height);
-    glEnd(); 
 }
 
 int main(int argc, char** argv) 
@@ -221,8 +221,9 @@ int main(int argc, char** argv)
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         drawOrigin();
-        drawRectangle(1,chara1);
+        //drawRectangle(1,chara1);
         //drawSquare(1);
+        chara1.draw(1);
  
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapWindow(window);
