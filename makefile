@@ -1,33 +1,21 @@
-CC			= gcc
-CFLAGS	= -Wall -O2 -g
-LDFLAGS	= -lSDL2 -lSDL2_image -lGLU -lGL -lm
+CC			= g++
+CFLAGS	= -O2 -g -MMD
+LDFLAGS	= -lSDL2 -lGLU -lGL -lm
+SRC = opengl.cpp 
 
-BINDIR	= bin/
-SRCDIR	= src/
-OBJDIR	= obj/
+all: 
 
-# Fichiers TD 04
+opengl : $(SRC:%.cpp=%.o)
+	$(CC) $^ -o $@ $(LDFLAGS) $(CFLAGS)
 
-# Fichiers exercice 03
-OBJ_TD04_EX03= opengl/opengl.o
-EXEC_TD04_EX03= opengl.out
+opengl.o : opengl.cpp
+	$(CC) -c $< $(LDFLAGS) $(CFLAGS)
 
-
-# Regles compilation TD 04
-
-all :
-
-
-opengl : $(OBJDIR)$(OBJ_TD04_EX03)
-	$(CC) $(CFLAGS) $(OBJDIR)$(OBJ_TD04_EX03) -o $(BINDIR)$(EXEC_TD04_EX03) $(LDFLAGS)
-
+%.o : %.cpp %.h
+	$(CC) -c $< $(LDFLAGS) $(CFLAGS)
 
 clean :
-	rm -rf *~
-	rm -rf $(SRCDIR)*/*~
-	rm -rf $(OBJDIR)
-	rm -rf $(BINDIR)*
+	rm *.o
+	rm *.d
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	mkdir -p `dirname $@`
-	$(CC) -o $@ -c $< $(CFLAGS)
+-include $(SRC:%.cpp=%.d)
