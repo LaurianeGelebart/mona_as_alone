@@ -8,14 +8,6 @@ OBJDIR	= obj/
 
 # Fichiers TD 04
 
-# Fichiers exercice 01
-OBJ_TD04_EX01= ex01/td04_ex01.o
-EXEC_TD04_EX01= td04_ex01.out
-
-# Fichiers exercice 02
-OBJ_TD04_EX02= ex02/td04_ex02.o
-EXEC_TD04_EX02= td04_ex02.out
-
 # Fichiers exercice 03
 OBJ_TD04_EX03= opengl/opengl.o
 EXEC_TD04_EX03= opengl.out
@@ -25,11 +17,6 @@ EXEC_TD04_EX03= opengl.out
 
 all :
 
-ex01 : $(OBJDIR)$(OBJ_TD04_EX01)
-	$(CC) $(CFLAGS) $(OBJDIR)$(OBJ_TD04_EX01) -o $(BINDIR)$(EXEC_TD04_EX01) $(LDFLAGS)
-
-ex02 : $(OBJDIR)$(OBJ_TD04_EX02)
-	$(CC) $(CFLAGS) $(OBJDIR)$(OBJ_TD04_EX02) -o $(BINDIR)$(EXEC_TD04_EX02) $(LDFLAGS)
 
 opengl : $(OBJDIR)$(OBJ_TD04_EX03)
 	$(CC) $(CFLAGS) $(OBJDIR)$(OBJ_TD04_EX03) -o $(BINDIR)$(EXEC_TD04_EX03) $(LDFLAGS)
