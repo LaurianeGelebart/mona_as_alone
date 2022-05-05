@@ -12,6 +12,7 @@
 #include "Character.h"
 #include "Menu.h"
 #include "Level.h"
+#include "Quadtree.h"
 
 
 int main(int argc, char** argv) 
