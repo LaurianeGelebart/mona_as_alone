@@ -38,7 +38,26 @@ void Level::draw()
 }
 
 int Level::event()
-{
+{   
+    if(this->tab_character[this->current_character].speed.y > 0)
+    { 
+        if(this->tab_character[this->current_character].speed.y <= 0.02*g)
+        {
+            this->tab_character[this->current_character].speed.y = 0;
+        }
+        else
+        {
+            this->tab_character[this->current_character].speed.y -= 0.02*g;
+        }
+    }
+
+    this->tab_character[this->current_character].set_position();
+
+    if(this->tab_character[this->current_character].speed.x != 0)
+    {
+        this->tab_character[this->current_character].speed.x = 0;
+    }
+    
     SDL_Event e;
     while(SDL_PollEvent(&e)) 
     {
@@ -81,12 +100,23 @@ int Level::event()
             //Touche clavier
             case SDL_KEYDOWN:
                 printf("touche pressee (code = %d)\n", e.key.keysym.sym);
-
+    
                 if (e.key.keysym.sym == SDLK_UP)
                 {
-                    this->tab_character[this->current_character].move(0,1);
+                    this->tab_character[this->current_character].jump(3);
                 }
-                break;
+
+                clif (e.key.keysym.sym == SDLK_LEFT)
+                {
+                    this->tab_character[this->current_character].move(-1);
+                }
+                
+                if (e.key.keysym.sym == SDLK_RIGHT)
+                {
+                    this->tab_character[this->current_character].move(1);
+                }
+
+            break;
 
             default:
                 break;
@@ -95,14 +125,14 @@ int Level::event()
 
     /* fin while */
 
-    if (keystate[SDL_SCANCODE_RIGHT])
+    /*if (keystate[SDL_SCANCODE_RIGHT])
     {
-        this->tab_character[this->current_character].move(1,0);
+        this->tab_character[this->current_character].move(1);
     }
     else if(keystate[SDL_SCANCODE_LEFT])
     {
-        this->tab_character[this->current_character].move(-1,0);
-    }
+        this->tab_character[this->current_character].move(-1);
+    }*/
 
     return 1 ;  
 }

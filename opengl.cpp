@@ -81,6 +81,9 @@ int main(int argc, char** argv)
     Position end_pos_chara1;
     end_pos_chara1.x =30;
     end_pos_chara1.y =0.5;
+    Vect acc1;
+    acc1.x=0;
+    acc1.y=1;
 
     Character chara1 ; 
     chara1.init_Character(2,3,pos_chara1,end_pos_chara1);

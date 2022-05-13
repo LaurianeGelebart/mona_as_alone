@@ -14,10 +14,31 @@ void Character::set_current_pos(Position current_pos)
     this->current_pos = current_pos;
 }
 
-void Character::move(int dx, int dy)
+void Character::move(float accx)
 {
-    this->current_pos.x+=dx;
-    this->current_pos.y+=dy;
+    this->speed.x = accx;
+}
+
+void Character::jump(float accy)
+{
+    this->speed.y = accy;
+     printf("jump activé %f\n",this->speed.y);
+}
+
+void Character::set_position()
+{
+    this->current_pos.x += this->speed.x;
+
+    if(this->current_pos.y < 0.4)
+    {
+        this->current_pos.y = 0.5;
+    }
+    else
+    {
+        this->current_pos.y += this->speed.y + this->acc.y;
+    }
+
+     printf("pos %f\n",this->current_pos.y);
 }
 
 void Character::draw_character(int filled)
@@ -57,5 +78,9 @@ void Character::init_Character(int height, int width, Position pos, Position fin
     this->end_pos.y = final_pos.y;
     this->color.r = 0.8 ; 
     this->color.g = 0.1 ; 
-    this->color.b = 0.5 ; 
+    this->color.b = 0.5 ;
+    this->acc.x = 0;
+    this->acc.y = -g;
+    this->speed.x = 0;
+    this->speed.y = 0;
 }

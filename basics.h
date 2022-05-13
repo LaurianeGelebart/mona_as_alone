@@ -21,6 +21,13 @@ struct Square
     Position pos_square; 
 };
 
+struct Vect{
+	float x;
+	float y;
+};
+
+const double dt = 0.001;
+const double g = 2.0;
 
 /* Espace fenetre virtuelle */
 static const float GL_VIEW_SIZE = 50.;  
