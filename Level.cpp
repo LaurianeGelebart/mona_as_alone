@@ -6,19 +6,21 @@
 #include <math.h>
 
 #include "basics.h"
-#include "Character.h"
+#include "Scene.h"
 #include "Level.h"
+#include "Character.h"
 
 
 const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
-void Level::init_level(Square* tab_square, Character* tab_character, int nb_character)
+Level::Level(Square* tab_square, Character* tab_character[], int nb_character)
 {
     this->tab_square = tab_square;
     this->tab_character = tab_character;
     this->nb_character = nb_character ; 
     this->current_character = 0; 
 }
+
 
 void Level::set_nb_character_end(int nb_character_end)
 {
@@ -33,29 +35,29 @@ void Level::set_current_character(int new_current)
 void Level::draw()
 {
     for (int i=0 ; i<this->nb_character ; i++){
-        (this->tab_character[i]).draw_character(1); 
+        (this->tab_character[i])->draw_character(1); 
     }
 }
 
 int Level::event()
 {   
-    if(this->tab_character[this->current_character].speed.y > 0)
+    if(this->tab_character[this->current_character]->speed.y > 0)
     { 
-        if(this->tab_character[this->current_character].speed.y <= 0.02*g)
+        if(this->tab_character[this->current_character]->speed.y <= 0.02*g)
         {
-            this->tab_character[this->current_character].speed.y = 0;
+            this->tab_character[this->current_character]->speed.y = 0;
         }
         else
         {
-            this->tab_character[this->current_character].speed.y -= 0.02*g;
+            this->tab_character[this->current_character]->speed.y -= 0.02*g;
         }
     }
 
-    this->tab_character[this->current_character].set_position();
+    this->tab_character[this->current_character]->set_position();
 
-    if(this->tab_character[this->current_character].speed.x != 0)
+    if(this->tab_character[this->current_character]->speed.x != 0)
     {
-        this->tab_character[this->current_character].speed.x = 0;
+        this->tab_character[this->current_character]->speed.x = 0;
     }
     
     SDL_Event e;
@@ -103,17 +105,17 @@ int Level::event()
     
                 if (e.key.keysym.sym == SDLK_UP)
                 {
-                    this->tab_character[this->current_character].jump(3);
+                    this->tab_character[this->current_character]->jump(3);
                 }
 
-                clif (e.key.keysym.sym == SDLK_LEFT)
+                if (e.key.keysym.sym == SDLK_LEFT)
                 {
-                    this->tab_character[this->current_character].move(-1);
+                    this->tab_character[this->current_character]->move(-1);
                 }
                 
                 if (e.key.keysym.sym == SDLK_RIGHT)
                 {
-                    this->tab_character[this->current_character].move(1);
+                    this->tab_character[this->current_character]->move(1);
                 }
 
             break;

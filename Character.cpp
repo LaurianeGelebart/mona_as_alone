@@ -29,15 +29,12 @@ void Character::set_position()
 {
     this->current_pos.x += this->speed.x;
 
-    if(this->current_pos.y < 0.4)
+    this->current_pos.y += this->speed.y + this->acc.y;
+    if(this->current_pos.y < 4.4)
     {
-        this->current_pos.y = 0.5;
+        this->current_pos.y = 5;
     }
-    else
-    {
-        this->current_pos.y += this->speed.y + this->acc.y;
-    }
-
+    
      printf("pos %f\n",this->current_pos.y);
 }
 
@@ -66,7 +63,7 @@ void Character::draw_character(int filled)
     glEnd(); 
 }
 
-void Character::init_Character(int height, int width, Position pos, Position final_pos)
+Character::Character (int height, int width, Position pos, Position final_pos)
 {
     this->height = height;
     this->width = width;

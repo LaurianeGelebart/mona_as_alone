@@ -44,4 +44,5 @@ void onWindowResized(unsigned int width, unsigned int height);
 void drawOrigin(); 
 void drawSquare(int filled);  
 
+
 #endif

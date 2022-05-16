@@ -6,6 +6,7 @@
 #include <math.h>
 
 #include "basics.h"
+#include "Scene.h"
 
 void onWindowResized(unsigned int width, unsigned int height)
 { 

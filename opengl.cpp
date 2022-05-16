@@ -5,18 +5,22 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "Scene.h"
+
 //Variables, structures et fonctions de base
 #include "basics.h"
 
 //Class
 #include "Character.h"
 #include "Menu.h"
+#include "Scene_holder.h"
 #include "Level.h"
 #include "Quadtree.h"
 
 
 int main(int argc, char** argv) 
 {
+    
     //* Initialisation de SDL */
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -76,8 +80,8 @@ int main(int argc, char** argv)
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     Position pos_chara1;    //faire fonction pour ça
-    pos_chara1.x =0.5;
-    pos_chara1.y =0.5;
+    pos_chara1.x =2;
+    pos_chara1.y =5;
     Position end_pos_chara1;
     end_pos_chara1.x =30;
     end_pos_chara1.y =0.5;
@@ -85,15 +89,18 @@ int main(int argc, char** argv)
     acc1.x=0;
     acc1.y=1;
 
-    Character chara1 ; 
-    chara1.init_Character(2,3,pos_chara1,end_pos_chara1);
-    Character tab_character[4] ; 
+    Character* chara1 = new Character(10,4,pos_chara1,end_pos_chara1);
+    Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
     Square tab_square[4] ; 
+    Menu* menu ; 
+    Scene* tab_level[3] ;   ///
 
     //Création du niveau 1
-    Level level1 ; 
-    level1.init_level(tab_square, tab_character, 1); 
+    Level* level1 = new Level(tab_square, tab_character, 1);
+    tab_level[0] = level1 ; 
+    Scene_holder* scene = new Scene_holder(tab_level, menu);
+    scene->change_to_level(0); 
 
     /* ------------------------------ LOOP ------------------------------ */
     int loop = 1;
@@ -108,14 +115,14 @@ int main(int argc, char** argv)
         glLoadIdentity();
         drawOrigin();
 
-        level1.draw();
+        scene->get_current_scene()->draw();
         
  
         //Echange du front et du back buffer : mise a jour de la fenetre/
         SDL_GL_SwapWindow(window);
         
         /* Boucle traitant les evenements */
-        loop = level1.event(); 
+        loop = scene->get_current_scene()->event(); 
 
         //Calcul du temps ecoule
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
