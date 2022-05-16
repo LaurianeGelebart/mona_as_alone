@@ -30,7 +30,7 @@ const double dt = 0.001;
 const double g = 2.0;
 
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_SIZE = 50.;  
+static const float GL_VIEW_SIZE = 112.5;  
 
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 800;
@@ -42,6 +42,6 @@ static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
 void onWindowResized(unsigned int width, unsigned int height);
 void drawOrigin(); 
-void drawSquare(int filled);  
+void drawSquare(int filled,float width, float height, float x, float y);  
 
 #endif

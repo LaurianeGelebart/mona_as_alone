@@ -22,7 +22,6 @@ void Character::move(float accx)
 void Character::jump(float accy)
 {
     this->speed.y = accy;
-     printf("jump activé %f\n",this->speed.y);
 }
 
 void Character::set_position()
@@ -38,7 +37,8 @@ void Character::set_position()
         this->current_pos.y += this->speed.y + this->acc.y;
     }
 
-     printf("pos %f\n",this->current_pos.y);
+     printf("pos y %f\n",this->current_pos.y);
+     printf("pos x %f\n",this->current_pos.x);
 }
 
 void Character::draw_character(int filled)

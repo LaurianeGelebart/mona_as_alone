@@ -50,23 +50,23 @@ void drawOrigin()
     glColor3fv(currentColor);
 }
 
-void drawSquare(int filled) 
+void drawSquare(int filled,float width, float height, float x, float y) 
 {
     if(filled) 
     {
-        glBegin(GL_TRIANGLE_FAN);
-        glVertex2f(0.0, 0.0);
+        glBegin(GL_QUADS);
     }
     else 
     {
-        glBegin(GL_LINE_STRIP);
+        glBegin(GL_LINE_LOOP);
     }
 
-    glVertex2f( 0.0, 1.0);
-    glVertex2f( 1.0, 1.0);
-    glVertex2f( 1.0, 0.0);
-    glVertex2f( 0.0, 0.0);
-    glVertex2f( 0.0, 1.0);
+    glVertex2f(x-0.5*width,y+0.5*height);
+    glVertex2f(x+0.5*width,y+0.5*height);
+    glVertex2f(x+0.5*width,y-0.5*height);
+    glVertex2f(x-0.5*width,y-0.5*height);
+    
+    glColor3f(0.1, 0.2, 0.5);
 
     glEnd();
     

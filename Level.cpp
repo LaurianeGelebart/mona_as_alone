@@ -12,9 +12,10 @@
 
 const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
-void Level::init_level(Square* tab_square, Character* tab_character, int nb_character)
+void Level::init_level(Square* tab_square, Character* tab_character, int nb_character, int nb_square)
 {
     this->tab_square = tab_square;
+    this->nb_square = nb_square;
     this->tab_character = tab_character;
     this->nb_character = nb_character ; 
     this->current_character = 0; 
@@ -34,6 +35,9 @@ void Level::draw()
 {
     for (int i=0 ; i<this->nb_character ; i++){
         (this->tab_character[i]).draw_character(1); 
+    }
+    for (int i=0 ; i<nb_square ; i++){
+        (drawSquare(1,tab_square[i].width,tab_square[i].height,tab_square[i].pos_square.x,tab_square[i].pos_square.y)); 
     }
 }
 
@@ -105,8 +109,7 @@ int Level::event()
                 {
                     this->tab_character[this->current_character].jump(3);
                 }
-
-                clif (e.key.keysym.sym == SDLK_LEFT)
+                if (e.key.keysym.sym == SDLK_LEFT)
                 {
                     this->tab_character[this->current_character].move(-1);
                 }
