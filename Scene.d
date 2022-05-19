@@ -1,1 +1,1 @@
-Scene.o: Scene.cpp basics.h Scene.h
+Scene.o: Scene.cpp Scene.h

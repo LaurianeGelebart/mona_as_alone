@@ -1,7 +1,8 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "basics.h"
+#include "geometry.h"
+#include "color.h"
 
 class Character
 {
@@ -12,6 +13,7 @@ class Character
         Position end_pos;
         Position current_pos;
         Color color;
+        const Uint8* keystate;
     
     public : 
         Character(int height, int width, Position pos, Position final_pos); 
@@ -20,6 +22,7 @@ class Character
         void draw_character(int filled);
         void set_current_pos(Position current_pos);
         void set_position();
+        void manageEvents(SDL_Event e);
         Vect speed;
         Vect acc;
 };

@@ -1,1 +1,1 @@
-Character.o: Character.cpp basics.h Character.h
+Character.o: Character.cpp constants.h geometry.h color.h Character.h

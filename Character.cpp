@@ -1,11 +1,9 @@
 #include <SDL2/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
-#include "basics.h"
+#include "constants.h"
+#include "geometry.h"
+#include "color.h"
 #include "Character.h"
     
 
@@ -16,26 +14,55 @@ void Character::set_current_pos(Position current_pos)
 
 void Character::move(float accx)
 {
-    this->speed.x = accx;
+    this->acc.x = accx;
 }
 
 void Character::jump(float accy)
 {
     this->speed.y = accy;
-     printf("jump activé %f\n",this->speed.y);
+    printf("jump activé %f\n",this->speed.y);
 }
 
 void Character::set_position()
 {
-    this->current_pos.x += this->speed.x;
 
-    this->current_pos.y += this->speed.y + this->acc.y;
-    if(this->current_pos.y < 4.4)
+    if (this->keystate[SDL_SCANCODE_LEFT]){
+        this->move(-100);
+    }
+    else if (this->keystate[SDL_SCANCODE_RIGHT]){
+        this->move(100);
+    } else {
+        this->move(0);
+    }
+
+    this->speed.x += (this->acc.x - this->speed.x*4)*delta_t;
+
+    this->speed.y += this->acc.y*delta_t;
+
+    this->current_pos.x += this->speed.x*delta_t;
+
+    this->current_pos.y += this->speed.y*delta_t;
+    
+    if(this->current_pos.y < 5)
     {
         this->current_pos.y = 5;
+        this->speed.y = 0;
+    }
+
+       
+    if(this->speed.y > 0)
+    { 
+        if(this->speed.y <= 0.02*g)
+        {
+            this->speed.y = 0;
+        }
+        else
+        {
+            this->speed.y -= g*delta_t;
+        }
     }
     
-     printf("pos %f\n",this->current_pos.y);
+    printf("pos %f\n",this->current_pos.y);
 }
 
 void Character::draw_character(int filled)
@@ -67,17 +94,24 @@ Character::Character (int height, int width, Position pos, Position final_pos)
 {
     this->height = height;
     this->width = width;
-    this->start_pos.x = pos.x;
-    this->start_pos.y=pos.y;
-    this->current_pos.x= pos.x;
-    this->current_pos.y= pos.y;
-    this->end_pos.x = final_pos.x;
-    this->end_pos.y = final_pos.y;
-    this->color.r = 0.8 ; 
-    this->color.g = 0.1 ; 
-    this->color.b = 0.5 ;
-    this->acc.x = 0;
-    this->acc.y = -g;
-    this->speed.x = 0;
-    this->speed.y = 0;
+    this->start_pos = pos;
+    this->current_pos = pos;
+    this->end_pos = final_pos;
+    this->color = {0.8, 0.1, 0.5} ;
+    this->acc = {0, -g};
+    this->speed = {0,0};
+    this->keystate = SDL_GetKeyboardState(NULL);
+
+}
+
+void Character::manageEvents(SDL_Event e){
+    if(e.type == SDL_KEYDOWN){
+            
+        // printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+
+        if (e.key.keysym.sym == SDLK_UP)
+        {
+            this->jump(70);
+        }
+    }
 }

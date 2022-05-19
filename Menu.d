@@ -1,1 +1,1 @@
-Menu.o: Menu.cpp basics.h Scene.h Menu.h Character.h
+Menu.o: Menu.cpp Menu.h Scene.h

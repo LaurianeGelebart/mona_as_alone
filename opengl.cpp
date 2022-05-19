@@ -8,12 +8,12 @@
 #include "Scene.h"
 
 //Variables, structures et fonctions de base
-#include "basics.h"
+#include "constants.h"
 
 //Class
 #include "Character.h"
 #include "Menu.h"
-#include "Scene_holder.h"
+#include "gameEnv.h"
 #include "Level.h"
 #include "Quadtree.h"
 
@@ -77,7 +77,6 @@ int main(int argc, char** argv)
     }    
   
 
-    onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     Position pos_chara1;    //faire fonction pour ça
     pos_chara1.x =2;
@@ -93,37 +92,49 @@ int main(int argc, char** argv)
     Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
     Square tab_square[4] ; 
-    Menu* menu ; 
-    Scene* tab_level[3] ;   ///
+    Menu* menu = new Menu();
+    Level* tab_level[3] ;
+
+    printf("%p\n", menu);
 
     //Création du niveau 1
     Level* level1 = new Level(tab_square, tab_character, 1);
+    Level* level2 = new Level(tab_square, tab_character, 1);
     tab_level[0] = level1 ; 
-    Scene_holder* scene = new Scene_holder(tab_level, menu);
-    scene->change_to_level(0); 
+    Game_Environment environment = Game_Environment(tab_level, menu);
+    environment.change_to_level(0); 
 
+    environment.onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
     /* ------------------------------ LOOP ------------------------------ */
-    int loop = 1;
-    while(loop) 
+
+    while(environment.is_playing()) 
     {
+        environment.manageEvents();
+
         //Recuperation du temps au debut de la boucle
         Uint32 startTime = SDL_GetTicks();
         
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        drawOrigin();
-
-        scene->get_current_scene()->draw();
-        
+        glLoadIdentity();       
  
         //Echange du front et du back buffer : mise a jour de la fenetre/
-        SDL_GL_SwapWindow(window);
         
         /* Boucle traitant les evenements */
-        loop = scene->get_current_scene()->event(); 
+        //loop = scene->get_current_scene()->event(); 
+        
+        //dessine la scene
+        // level1->draw();
+        if (environment.is_in_menu()){
+            ((Menu*)environment.get_current_scene())->draw();
+        } else {
+            ((Level*)environment.get_current_scene())->get_current_character()->set_position();
+            ((Level*)environment.get_current_scene())->draw();
+        }
+        printf("%p :: %p :: %p :: %p\n", environment.get_current_scene(), menu, level1, level2);
 
+        SDL_GL_SwapWindow(window);
         //Calcul du temps ecoule
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
 

@@ -8,8 +8,8 @@ class Scene
     private: 
 
     public:
-        virtual void draw() {};
-        virtual int event() {return 0;};
+        void manageEvents(SDL_Event);
+        void draw();
 };
 
 
