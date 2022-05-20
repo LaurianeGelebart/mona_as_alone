@@ -7,7 +7,7 @@ void makeMenu(Menu* menu){}
 
 void makeLevel(Level** tab_level){
 
-    Position pos_chara1;    //faire fonction pour ça
+    Position pos_chara1;    
     pos_chara1.x =2;
     pos_chara1.y =5;
     Position end_pos_chara1;
@@ -107,5 +107,6 @@ void makeLevel(Level** tab_level){
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ; 
 
-    printf("%p\n", tab_level);
+    printf("\n%p----------2------------\n",tab_character[0]);
+
 }

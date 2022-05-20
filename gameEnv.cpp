@@ -16,24 +16,20 @@ void Game_Environment::change_to_menu(){
 void Game_Environment::change_to_level(int level){
 	this->current_scene = this->tab_level[level] ; 
 }
-Scene * Game_Environment::get_current_scene(){
+Scene * Game_Environment::get_current_scene(){ 
 	return this->current_scene ; 
 } 
 
 void Game_Environment::manageEvents(){
-	// printf("%p\n", tab_level);
+	 //printf("%p\n", tab_level);
 
 	SDL_Event e;
 	while(SDL_PollEvent(&e)) 
 	{
-		//L'utilisateur ferme la fenetre
 
-		//L'utilisateur appuie sur Q ou Echap 
-
-
-		//L'utilisateur appuie sur M
 		switch(e.type) 
 		{
+			//Quitter le jeu --> l'utilisateur ferme la fenetre
 			case SDL_QUIT :
 				this->game_loop = 0;
 			break;
@@ -55,20 +51,25 @@ void Game_Environment::manageEvents(){
 			//Touche clavier
 			case SDL_KEYDOWN:
 
-				printf("%p :: %p\n", this->menu, this->current_scene); //DEBUG
+				//printf("%p :: %p\n", this->menu, this->current_scene); //DEBUG
+
+				//Quitter le jeu --> l'utilisateur appuie sur Q ou Echap 
 				if (e.key.keysym.sym == SDLK_q)
 				{
 					this->game_loop = 0;
 				}
-
+				//Passage à un niveau --> l'utilisateur appuie sur entrée pour valider
 				if (this->is_in_menu() && (e.key.keysym.sym == SDLK_RETURN))
 				{
 					this->change_to_level(this->menu->get_selected_level());
 				}
-					else if(!this->is_in_menu() && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
+				//Passage au menu --> l'utilisateur appuie sur M ou echap
+				else if(!this->is_in_menu() && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
 				{
 					this->change_to_menu();
-				} else {
+				} 
+				//Si l'event n'est pas connu ici on cherche dans ceux de la scène courante
+				else {
 					 if (this->is_in_menu()){
 						((Menu*)this->get_current_scene())->manageEvents(e);
 					} else {

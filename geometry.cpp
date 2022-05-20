@@ -1,21 +1,14 @@
 #include "geometry.h"
 
 
-void drawSquare(int filled,float width, float height, float x, float y) 
+void drawSquare(Square square) 
 {
-    if(filled) 
-    {
-        glBegin(GL_QUADS);
-    }
-    else 
-    {
-        glBegin(GL_LINE_LOOP);
-    }
+    glBegin(GL_QUADS);
 
-    glVertex2f(x-0.5*width,y+0.5*height);
-    glVertex2f(x+0.5*width,y+0.5*height);
-    glVertex2f(x+0.5*width,y-0.5*height);
-    glVertex2f(x-0.5*width,y-0.5*height);
+    glVertex2f(square.pos_square.x-0.5*square.width,square.pos_square.y+0.5*square.height);
+    glVertex2f(square.pos_square.x+0.5*square.width,square.pos_square.y+0.5*square.height);
+    glVertex2f(square.pos_square.x+0.5*square.width,square.pos_square.y-0.5*square.height);
+    glVertex2f(square.pos_square.x-0.5*square.width,square.pos_square.y-0.5*square.height);
     
     glColor3f(0.1, 0.2, 0.5);
 

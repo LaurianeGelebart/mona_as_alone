@@ -96,10 +96,16 @@ int main(int argc, char** argv)
     Vect acc1;
     acc1.x=0;
     acc1.y=1;
-
     Character* chara1 = new Character(10,4,pos_chara1,end_pos_chara1);
+
+    Position pos_chara2;    
+    pos_chara1.x =2;
+    pos_chara1.y =50;
+    Character* chara2 = new Character(5,7,pos_chara1,end_pos_chara1);
+
     Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
+    tab_character[1] = chara2 ; 
     Square tab_square[12] ; 
 
 
@@ -181,18 +187,20 @@ int main(int argc, char** argv)
     tab_square[10]=square11;
 
     //Création du niveau 1
-    Level* level1 = new Level(tab_square, tab_character, 12, 1);
-    Level* level2 = new Level(tab_square, tab_character, 12,  1);
+    Level* level1 = new Level(tab_square, tab_character, 12, 2);
+    Level* level2 = new Level(tab_square, tab_character, 12,  2);
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ; 
     //////////////////////////////////////////
+    
+
+  // makeLevel(tab_level);
 
     Game_Environment environment = Game_Environment(tab_level, menu);
     environment.change_to_level(0); 
 
     environment.onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
     /* ------------------------------ LOOP ------------------------------ */
-
     while(environment.is_playing()) 
     {
         
@@ -207,16 +215,20 @@ int main(int argc, char** argv)
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();       
  
-        
         //dessine la scene
         if (environment.is_in_menu()){
             ((Menu*)environment.get_current_scene())->draw();
         } else {
-            ((Level*)environment.get_current_scene())->get_current_character()->set_position();
+            //printf("\n%p----------2------------\n",((Level*)environment.get_current_scene())->tab_character[0]);
+            ((Level*)environment.get_current_scene())->get_current_character()->set_position(); 
+            for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
+                ((Level*)environment.get_current_scene())->tab_character[i]->gravity(); 
+            } // printf("%p\n", tab_level);   
             ((Level*)environment.get_current_scene())->draw();
         }
         //printf("%p :: %p :: %p :: %p\n", environment.get_current_scene(), menu, level1, level2);
 
+     
         //Echange du front et du back buffer : mise a jour de la fenetre
         SDL_GL_SwapWindow(window);
 

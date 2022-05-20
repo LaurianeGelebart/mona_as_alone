@@ -20,9 +20,10 @@ class Character
         void move(float accx);
         void jump(float accy);
         void draw_character(int filled);
-        void set_current_pos(Position current_pos);
         void set_position();
+        void gravity();
         void manageEvents(SDL_Event e);
+        bool verif_intersection(Square R1,Square R2); 
         Vect speed;
         Vect acc;
 };

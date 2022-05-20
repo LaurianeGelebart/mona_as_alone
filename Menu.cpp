@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 
 #include "Menu.h"
+#include "geometry.h"
 
 Menu::Menu():selected_level(0), nb_levels(3){}
 
@@ -10,13 +11,18 @@ int Menu::get_selected_level(){
 }
 
 void Menu::draw(){
-    printf("Menu\n"); //DEBUG
+   // printf("Menu\n"); //DEBUG
+    Square fond;
+    fond.width =200;
+    fond.height=100;
+    fond.pos_square= {0, 0};
+
+    drawSquare(fond); 
 
 }
 
 void Menu::manageEvents(SDL_Event e){
     if (e.type == SDL_KEYDOWN){
-        printf("M\n");
 
         if (e.key.keysym.sym == SDLK_UP)
         {

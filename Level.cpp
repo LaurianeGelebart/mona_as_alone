@@ -12,11 +12,16 @@ Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int 
     this->nb_square = nb_square;
     this->tab_character = tab_character;
     this->nb_character = nb_character ; 
-    this->current_character = tab_character[0]; 
+    this->selected_character = 0;
+    this->current_character = tab_character[this->selected_character]; 
 }
 
-Character* Level::get_current_character(){
+Character* Level::get_current_character(){  
     return this->current_character;
+}
+
+int Level::get_nb_character(){  
+    return this->nb_character;
 }
 
 /*
@@ -35,16 +40,21 @@ void Level::draw()
     for (int i=0 ; i<this->nb_character ; i++){
         (this->tab_character[i])->draw_character(1); 
     }
+    
     for (int i=0 ; i<this->nb_square ; i++){
-        (drawSquare(1,tab_square[i].width,tab_square[i].height,tab_square[i].pos_square.x,tab_square[i].pos_square.y)); 
+        drawSquare(tab_square[i]); 
     }
-    for (int i=0 ; i<nb_square ; i++){
-        (drawSquare(1,tab_square[i].width,tab_square[i].height,tab_square[i].pos_square.x,tab_square[i].pos_square.y)); 
-    }
+    
 }
 
 void Level::manageEvents(SDL_Event e)
 {   
-    this->current_character->manageEvents(e);
+    if (e.key.keysym.sym == SDLK_SPACE) {
+        this->selected_character = (this->selected_character+1)%this->nb_character; 
+        this->set_current_character(this->selected_character);
+    }else {
+        this->current_character->manageEvents(e);
+    }
+    
 }
 

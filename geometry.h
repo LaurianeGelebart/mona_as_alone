@@ -24,6 +24,6 @@ struct Square
 };
 
 
-void drawSquare(int filled,float width, float height, float x, float y) ;
+void drawSquare(Square) ;
 
 #endif
