@@ -21,6 +21,7 @@ Scene * Game_Environment::get_current_scene(){
 } 
 
 void Game_Environment::manageEvents(){
+	// printf("%p\n", tab_level);
 
 	SDL_Event e;
 	while(SDL_PollEvent(&e)) 
@@ -31,7 +32,6 @@ void Game_Environment::manageEvents(){
 
 
 		//L'utilisateur appuie sur M
-		
 		switch(e.type) 
 		{
 			case SDL_QUIT :
@@ -55,7 +55,7 @@ void Game_Environment::manageEvents(){
 			//Touche clavier
 			case SDL_KEYDOWN:
 
-				// printf("%p :: %p\n", this->menu, this->current_scene); //DEBUG
+				printf("%p :: %p\n", this->menu, this->current_scene); //DEBUG
 				if (e.key.keysym.sym == SDLK_q)
 				{
 					this->game_loop = 0;

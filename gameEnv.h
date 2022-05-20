@@ -10,7 +10,6 @@ class Game_Environment
         Menu* menu ; 
         Level** tab_level ; 
         Scene* current_scene ; 
-
         int game_loop;
 
     public:
