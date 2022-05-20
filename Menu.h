@@ -1,14 +1,22 @@
 #ifndef MENU_H
-#define MENU_H
+#define MENU_H 
 
-class Menu 
+#include <SDL2/SDL.h>
+#include "Scene.h"
+
+class Menu : public Scene
 {
     private:
-       
+       int selected_level;
+       int nb_levels;
 
     public:
+        Menu();
         void draw();
-        void event();
+        void manageEvents(SDL_Event);
+
+        int get_selected_level();
+
         
 }; 
 

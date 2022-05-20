@@ -5,19 +5,24 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "Scene.h"
+
 //Variables, structures et fonctions de base
-#include "basics.h"
+#include "constants.h"
 
 //Class
 #include "Character.h"
 #include "Menu.h"
+#include "gameEnv.h"
 #include "Level.h"
 #include "Quadtree.h"
+#include "makeLevel.h"
 
 float alpha=0.0;
 
 int main(int argc, char** argv) 
 {
+    
     //* Initialisation de SDL */
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -74,11 +79,17 @@ int main(int argc, char** argv)
     }    
   
 
-    onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    Position pos_chara1;    //faire fonction pour ça
-    pos_chara1.x =0.5; 
-    pos_chara1.y =0.5; 
+    Menu* menu = new Menu();
+    Level* tab_level[12] ;
+
+
+    ////////////////////////////////////////////
+    //A mettre dans Make level 
+    ////////////////////////////////////////////
+    Position pos_chara1;    
+    pos_chara1.x =2;
+    pos_chara1.y =5;
     Position end_pos_chara1;
     end_pos_chara1.x =30; 
     end_pos_chara1.y =0.5;
@@ -86,13 +97,12 @@ int main(int argc, char** argv)
     acc1.x=0;
     acc1.y=1;
 
-    Character chara1 ; 
-    chara1.init_Character(2,3,pos_chara1,end_pos_chara1); 
-    Character tab_character[4] ; 
+    Character* chara1 = new Character(10,4,pos_chara1,end_pos_chara1);
+    Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
-    Square tab_square[12]; 
+    Square tab_square[12] ; 
 
-    //////////////////////////////////////////
+
     Square square1;
     square1.width =40;
     square1.height=15;
@@ -164,44 +174,51 @@ int main(int argc, char** argv)
     tab_square[9]=square10;
 
     Square square11;
-    square10.width =30;
-    square10.height=2.5;
-    square10.pos_square.x=160; //+15*sin(alpha)); avec alpha=elapsedTime
-    square10.pos_square.y=26.25;
+    square11.width =30;
+    square11.height=2.5;
+    square11.pos_square.x=160; //+15*sin(alpha)); avec alpha=elapsedTime
+    square11.pos_square.y=26.25;
     tab_square[10]=square11;
-    //////////////////////////////////////////
 
     //Création du niveau 1
-    Level level1 ; 
-    level1.init_level(tab_square, tab_character, 1, 12); 
+    Level* level1 = new Level(tab_square, tab_character, 12, 1);
+    Level* level2 = new Level(tab_square, tab_character, 12,  1);
+    tab_level[0] = level1 ;   
+    tab_level[1] = level2 ; 
+    //////////////////////////////////////////
 
+    Game_Environment environment = Game_Environment(tab_level, menu);
+    environment.change_to_level(0); 
+
+    environment.onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
     /* ------------------------------ LOOP ------------------------------ */
-    int loop = 1;
-    while(loop) 
+
+    while(environment.is_playing()) 
     {
+        
+        /* Boucle traitant les evenements */
+        environment.manageEvents();
+
         //Recuperation du temps au debut de la boucle
         Uint32 startTime = SDL_GetTicks();
         
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        drawOrigin();
-        Square square10;
-        square10.width =30;
-        square10.height=2.5;
-        square10.pos_square.x=(160+15*sin(alpha));
-        square10.pos_square.y=26.25;
-        tab_square[9]=square10;
-
-        level1.draw();
-        
+        glLoadIdentity();       
  
-        //Echange du front et du back buffer : mise a jour de la fenetre/
-        SDL_GL_SwapWindow(window);
         
-        /* Boucle traitant les evenements */
-        loop = level1.event(); 
+        //dessine la scene
+        if (environment.is_in_menu()){
+            ((Menu*)environment.get_current_scene())->draw();
+        } else {
+            ((Level*)environment.get_current_scene())->get_current_character()->set_position();
+            ((Level*)environment.get_current_scene())->draw();
+        }
+        //printf("%p :: %p :: %p :: %p\n", environment.get_current_scene(), menu, level1, level2);
+
+        //Echange du front et du back buffer : mise a jour de la fenetre
+        SDL_GL_SwapWindow(window);
 
         //Calcul du temps ecoule
         Uint32 elapsedTime = SDL_GetTicks() - startTime;

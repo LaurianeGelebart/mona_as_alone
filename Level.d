@@ -1,1 +1,1 @@
-Level.o: Level.cpp basics.h Character.h Level.h
+Level.o: Level.cpp Level.h Character.h geometry.h color.h Scene.h
