@@ -1,7 +1,7 @@
 CC			= g++
 CFLAGS	= -O2 -g -MMD
 LDFLAGS	= -lSDL2 -lGLU -lGL -lm
-SRC = opengl.cpp geometry.cpp makeLevel.cpp Character.cpp Scene.cpp Menu.cpp Level.cpp gameEnv.cpp
+SRC = opengl.cpp geometry.cpp Square.cpp Character.cpp Scene.cpp Menu.cpp Level.cpp gameEnv.cpp
 
 opengl : $(SRC:%.cpp=%.o)
 	$(CC) $^ -o $@ $(LDFLAGS) $(CFLAGS)

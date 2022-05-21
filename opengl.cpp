@@ -15,8 +15,10 @@
 #include "Menu.h"
 #include "gameEnv.h"
 #include "Level.h"
-#include "Quadtree.h"
-#include "makeLevel.h"
+//#include "Quadtree.h"
+// #include "makeLevel.h"
+#include "Square.h"
+#include "geometry.h"
 
 float alpha=0.0;
 
@@ -108,14 +110,10 @@ int main(int argc, char** argv)
     tab_character[1] = chara2 ; 
     Square tab_square[12] ; 
 
-
-    Square square1;
-    square1.width =40;
-    square1.height=15;
-    square1.pos_square.x=20;
-    square1.pos_square.y=7.5;
+    Square square1 = Square(40, 15, {20, 7.5});
+    
     tab_square[0]=square1;
-
+/*
     Square square2;
     square2.width =35;
     square2.height=15;
@@ -184,7 +182,7 @@ int main(int argc, char** argv)
     square11.height=2.5;
     square11.pos_square.x=160; //+15*sin(alpha)); avec alpha=elapsedTime
     square11.pos_square.y=26.25;
-    tab_square[10]=square11;
+    tab_square[10]=square11;*/
 
     //Création du niveau 1
     Level* level1 = new Level(tab_square, tab_character, 12, 2);

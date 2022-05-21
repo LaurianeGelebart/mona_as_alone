@@ -16,14 +16,4 @@ struct Vect
 
 typedef Vect Position;
 
-struct Square
-{
-    int width; 
-    int height; 
-    Position pos_square; 
-};
-
-
-void drawSquare(Square) ;
-
 #endif

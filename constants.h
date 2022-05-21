@@ -6,7 +6,7 @@ const double dt = 0.001;
 const double g = 80.0;
 
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_SIZE = 50.;  
+static const float GL_VIEW_SIZE = 100.;  
 
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 800;

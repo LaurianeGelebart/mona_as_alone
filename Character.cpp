@@ -6,6 +6,7 @@
 #include "geometry.h"
 #include "color.h"
 #include "Character.h"
+#include "Square.h"
     
 
 Character::Character (int height, int width, Position pos, Position final_pos)
@@ -83,21 +84,23 @@ void Character::draw_character(int filled)
     {
         glBegin(GL_LINE_LOOP);
     }
-    //glTexCoord2f(0.,0.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,0.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,1.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
-    //glTexCoord2f(0.,1.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
-    
-    
+
+    float tab_pos[4]; 
+    this->get_positions(tab_pos) ; 
+
     glColor3f(this->color.r, this->color.g, this->color.b);
+
+    //glTexCoord2f(0.,0.);
+    glVertex2f( tab_pos[0], tab_pos[3]);
+    //glTexCoord2f(1.,0.);
+    glVertex2f( tab_pos[1], tab_pos[3]);
+    //glTexCoord2f(1.,1.);
+    glVertex2f( tab_pos[1], tab_pos[2]);
+    //glTexCoord2f(0.,1.);
+    glVertex2f( tab_pos[0], tab_pos[2]);
 
     glEnd(); 
 }
-
 
 void Character::manageEvents(SDL_Event e){
     if(e.type == SDL_KEYDOWN){
@@ -109,22 +112,17 @@ void Character::manageEvents(SDL_Event e){
     }
 }
 
-/*
-bool verif_intersection(Character R1,Square R2){
-    float x1min = R1.get_current_pos().x+0.5*R1.width; 
-    float x1max = R1.current_pos.x-0.5*R1.width; 
-    float y1min = R1.current_pos.x-0.5*R1.width; 
-    float y1max = R1.current_pos.x+0.5*R1.width; 
 
-    float x2min = R2.pos_square.x+0.5*R2.width; 
-    float x2max = R2.pos_square.x-0.5*R2.width; 
-    float y2min = R2.pos_square.x-0.5*R2.width; 
-    float y2max = R2.pos_square.x+0.5*R2.width; 
+bool Character::verif_intersection(Square square){
+    float tab_pos_character[4]; 
+    this->get_positions(tab_pos_character) ; 
+    float tab_pos_square[4]; 
+    square.get_positions(tab_pos_square) ; 
 
-    if y1max  < y2min : return false  // (1)
-    if y1min > y2max  : return false  // (2)
-    if x1min > x2max  : return false  // (3)
-    if x1max  < x2min : return false  // (4)
+    if (tab_pos_character[3]  < tab_pos_square[3]) { return false; }  // (1)
+    if (tab_pos_character[2]  > tab_pos_square[2]) { return false; } // (2)
+    if (tab_pos_character[0]  > tab_pos_square[1]) { return false; } // (3)
+    if (tab_pos_character[1]  < tab_pos_square[0]) { return false; } // (4)
     
-    return true  // non empty intersection
-}*/
+    else {return true ; } // non empty intersection
+}

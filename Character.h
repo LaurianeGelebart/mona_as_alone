@@ -1,17 +1,15 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include "Square.h"
 #include "geometry.h"
 #include "color.h"
 
-class Character
+class Character : public Square 
 {
     private : 
-        int width;
-        int height;
         Position start_pos;
         Position end_pos;
-        Position current_pos;
         Color color;
         const Uint8* keystate;
     
@@ -23,7 +21,7 @@ class Character
         void set_position();
         void gravity();
         void manageEvents(SDL_Event e);
-        bool verif_intersection(Square R1,Square R2); 
+        bool verif_intersection(Square square); 
         Vect speed;
         Vect acc;
 };

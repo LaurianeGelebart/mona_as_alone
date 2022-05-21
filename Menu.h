@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include "Scene.h"
-#include "geometry.h"
+#include "Square.h"
 
 class Menu : public Scene
 {

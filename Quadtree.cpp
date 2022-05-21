@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "Level.h"
 #include "Quadtree.h"
+#include "Square.h"
 
 void Quadtree::insert(Node *node)
 {

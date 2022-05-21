@@ -5,6 +5,7 @@
 #include "Level.h"
 #include "Character.h"
 #include "geometry.h"
+#include "Square.h"
 
 Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character)
 {
@@ -42,7 +43,7 @@ void Level::draw()
     }
     
     for (int i=0 ; i<this->nb_square ; i++){
-        drawSquare(tab_square[i]); 
+        this->tab_square[i].drawSquare(); 
     }
     
 }
