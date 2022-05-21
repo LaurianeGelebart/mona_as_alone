@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <string>
 #include "gameEnv.h"
 #include "constants.h"
 #include "Menu.h"
@@ -19,6 +21,26 @@ void Game_Environment::change_to_level(int level){
 Scene * Game_Environment::get_current_scene(){ 
 	return this->current_scene ; 
 } 
+GLuint Game_Environment::gentexture(std::string path)
+{
+	
+	SDL_Surface *surface = IMG_Load(path.c_str());
+	if(surface == NULL){
+		printf("Erreur chargement image\n");
+	return EXIT_FAILURE;
+	}
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D,textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(
+        GL_TEXTURE_2D, 0, GL_RGBA,
+        surface->w, surface->h, 0,
+        GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels
+    );
+    glBindTexture(GL_TEXTURE_2D, 0);
+	return textureID;
+}
 
 void Game_Environment::manageEvents(){
 	 //printf("%p\n", tab_level);

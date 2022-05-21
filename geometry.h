@@ -20,7 +20,9 @@ struct Square
 {
     int width; 
     int height; 
-    Position pos_square; 
+    Position pos_square;
+    GLuint textID;
+
 };
 
 

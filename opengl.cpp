@@ -1,8 +1,11 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string>
 #include <math.h>
 
 #include "Scene.h"
@@ -22,7 +25,6 @@ float alpha=0.0;
 
 int main(int argc, char** argv) 
 {
-    
     //* Initialisation de SDL */
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -76,9 +78,7 @@ int main(int argc, char** argv)
             SDL_Quit();
             return EXIT_FAILURE;
         }
-    }    
-  
-
+    }  
 
     Menu* menu = new Menu();
     Level* tab_level[12] ;
@@ -193,13 +193,13 @@ int main(int argc, char** argv)
     tab_level[1] = level2 ; 
     //////////////////////////////////////////
     
-
   // makeLevel(tab_level);
 
     Game_Environment environment = Game_Environment(tab_level, menu);
     environment.change_to_level(0); 
 
     environment.onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
+
     /* ------------------------------ LOOP ------------------------------ */
     while(environment.is_playing()) 
     {
@@ -213,7 +213,8 @@ int main(int argc, char** argv)
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();       
+        glLoadIdentity();
+          
  
         //dessine la scene
         if (environment.is_in_menu()){
@@ -223,11 +224,16 @@ int main(int argc, char** argv)
             ((Level*)environment.get_current_scene())->get_current_character()->set_position(); 
             for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
                 ((Level*)environment.get_current_scene())->tab_character[i]->gravity(); 
-            } // printf("%p\n", tab_level);   
+            } // printf("%p\n", tab_level);
             ((Level*)environment.get_current_scene())->draw();
         }
         //printf("%p :: %p :: %p :: %p\n", environment.get_current_scene(), menu, level1, level2);
-
+        
+        /*glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D,textureID);
+       
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);*/    
      
         //Echange du front et du back buffer : mise a jour de la fenetre
         SDL_GL_SwapWindow(window);
@@ -246,6 +252,8 @@ int main(int argc, char** argv)
 
 
     /* Liberation des ressources associees a la SDL */ 
+    /*glDeleteTextures(1,&textureID); //appeler sur les objets avec une methode freesurface
+    SDL_FreeSurface(surface);*/
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();

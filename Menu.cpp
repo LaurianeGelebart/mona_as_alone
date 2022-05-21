@@ -1,7 +1,9 @@
 #include <SDL2/SDL.h>
 
 #include "Menu.h"
+#include "gameEnv.h"
 #include "geometry.h"
+#include "constants.h"
 
 Menu::Menu(){
     this->selected_level = 0 ; 
@@ -22,12 +24,12 @@ Menu::Menu(){
     background.height=100;
     background.pos_square= {0, 0};
     
+    
     this->arrow_left = left ; 
     this->arrow_right = right; 
-    this->background = background; 
+    this->background = background;
 
 }
-
 
 int Menu::get_selected_level(){
     return this->selected_level;
@@ -35,10 +37,9 @@ int Menu::get_selected_level(){
 
 void Menu::draw(){
 
-  //  drawSquare(fond); 
-
-  drawSquare(this->arrow_left); 
-  drawSquare(this->arrow_right); 
+//drawSquare(background);   
+drawSquare(this->arrow_left); 
+drawSquare(this->arrow_right); 
 
 }
 
