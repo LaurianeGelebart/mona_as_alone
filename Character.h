@@ -11,7 +11,7 @@ class Character
         int height;
         Position start_pos;
         Position end_pos;
-        Position current_pos;
+        
         Color color;
         const Uint8* keystate;
     
@@ -26,6 +26,8 @@ class Character
         bool verif_intersection(Square R1,Square R2); 
         Vect speed;
         Vect acc;
+        Position current_pos;
+        
 };
 
 

@@ -18,8 +18,6 @@
 #include "Quadtree.h"
 #include "makeLevel.h"
 
-float alpha=0.0;
-
 int main(int argc, char** argv) 
 {
     
@@ -78,11 +76,10 @@ int main(int argc, char** argv)
         }
     }    
   
-
+    float alpha=0.0; //DEBUG
 
     Menu* menu = new Menu();
     Level* tab_level[12] ;
-
 
     ////////////////////////////////////////////
     //A mettre dans Make level 
@@ -173,18 +170,25 @@ int main(int argc, char** argv)
     tab_square[8]=square9;
 
     Square square10;
-    square10.width =30;
+    square10.width =12.5;
     square10.height=2.5;
-    square10.pos_square.x=(160+15*sin(alpha));
-    square10.pos_square.y=26.25;
+    square10.pos_square.x=136;
+    square10.pos_square.y=51;
     tab_square[9]=square10;
 
     Square square11;
     square11.width =30;
     square11.height=2.5;
-    square11.pos_square.x=160; //+15*sin(alpha)); avec alpha=elapsedTime
+    square11.pos_square.x=(160+15*sin(alpha));
     square11.pos_square.y=26.25;
     tab_square[10]=square11;
+
+    Square square12;
+    square11.width =20;
+    square11.height=2.5;
+    square11.pos_square.x=190;
+    square11.pos_square.y=(46.25+12.5*sin(alpha));
+    tab_square[11]=square12;
 
     //Création du niveau 1
     Level* level1 = new Level(tab_square, tab_character, 12, 2);
@@ -234,7 +238,15 @@ int main(int argc, char** argv)
 
         //Calcul du temps ecoule
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
-        alpha = elapsedTime/100.0;
+        alpha = SDL_GetTicks()*0.0005*2*M_PI;
+        
+        //Calcul du x de la plateforme moche pas ici
+        Square square11;
+        square11.width =30;
+        square11.height=2.5;
+        square11.pos_square.x=(160+15*sin(alpha)); 
+        square11.pos_square.y=26.25; 
+        tab_square[10]=square11;  
 
         //Si trop peu de temps s'est ecoule, on met en pause le programme 
         if(elapsedTime < FRAMERATE_MILLISECONDS) 

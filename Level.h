@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "Scene.h"
+#include "Camera2D.h"
 
 class Level : public Scene 
 {
@@ -11,6 +12,8 @@ class Level : public Scene
         int nb_square ; 
         int selected_character ;
         Character *current_character ; 
+        Camera2D level_cam;
+        
 
     public:
         Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character);
@@ -22,6 +25,8 @@ class Level : public Scene
         Character* get_current_character();
         Character** tab_character ; 
         Square* tab_square ;
+        void set_cam_position();
+        
 };
 
 #endif

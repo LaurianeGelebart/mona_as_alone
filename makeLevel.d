@@ -1,2 +1,2 @@
 makeLevel.o: makeLevel.cpp Menu.h Scene.h geometry.h Level.h Character.h \
- color.h makeLevel.h
+ color.h Camera2D.h makeLevel.h
