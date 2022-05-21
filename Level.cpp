@@ -1,4 +1,6 @@
 #include <SDL2/SDL.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 #include <stdio.h> //DEBUG
 
@@ -6,6 +8,7 @@
 #include "Character.h"
 #include "geometry.h"
 #include "Square.h"
+#include "Camera2D.h"
 
 Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character)
 {
@@ -25,6 +28,7 @@ int Level::get_nb_character(){
     return this->nb_character;
 }
 
+
 /*
 void Level::set_nb_character_end(int nb_character_end)
 {
@@ -38,13 +42,24 @@ void Level::set_current_character(int new_current)
 
 void Level::draw()
 {
-    for (int i=0 ; i<this->nb_character ; i++){
-        (this->tab_character[i])->draw_character(1); 
-    }
+
+    this->level_cam.set_position(current_character->current_pos);
+    this->current_character->draw_character(1);
     
+    glPushMatrix();
+    glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.2,0);
+
+    for (int i=0 ; i<this->nb_character ; i++){
+        if(i != this->selected_character){
+            (this->tab_character[i])->drawSquare(); 
+            // printf("%p\n", this->tab_character[i]); 
+        }
+    }
     for (int i=0 ; i<this->nb_square ; i++){
         this->tab_square[i].drawSquare(); 
     }
+    glPopMatrix();
+ 
     
 }
 

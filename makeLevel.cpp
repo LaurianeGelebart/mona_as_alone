@@ -89,7 +89,7 @@ void makeLevel(Level** tab_level){
     Square square10;
     square10.width =30;
     square10.height=2.5;
-    square10.pos_square.x=(160+15*sin(1));
+    square10.pos_square.x=160+15*sin(1);
     square10.pos_square.y=26.25;
     tab_square[9]=square10;
 

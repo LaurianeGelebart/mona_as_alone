@@ -24,6 +24,8 @@ class Character : public Square
         bool verif_intersection(Square square); 
         Vect speed;
         Vect acc;
+        Position current_pos;
+        
 };
 
 

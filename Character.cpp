@@ -90,13 +90,9 @@ void Character::draw_character(int filled)
 
     glColor3f(this->color.r, this->color.g, this->color.b);
 
-    //glTexCoord2f(0.,0.);
     glVertex2f( tab_pos[0], tab_pos[3]);
-    //glTexCoord2f(1.,0.);
     glVertex2f( tab_pos[1], tab_pos[3]);
-    //glTexCoord2f(1.,1.);
     glVertex2f( tab_pos[1], tab_pos[2]);
-    //glTexCoord2f(0.,1.);
     glVertex2f( tab_pos[0], tab_pos[2]);
 
     glEnd(); 
