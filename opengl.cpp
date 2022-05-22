@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <math.h>
 
+
 #include "Scene.h"
 
 //Variables, structures et fonctions de base
