@@ -1,5 +1,6 @@
 #include "geometry.h"
 
+/*
 
 void drawSquare(Square square) 
 {
@@ -15,3 +16,4 @@ void drawSquare(Square square)
     glEnd();
     
 }
+*/

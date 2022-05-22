@@ -16,6 +16,7 @@ struct Vect
 
 typedef Vect Position;
 
+/*
 struct Square
 {
     int width; 
@@ -25,5 +26,7 @@ struct Square
 
 
 void drawSquare(Square) ;
+
+*/
 
 #endif

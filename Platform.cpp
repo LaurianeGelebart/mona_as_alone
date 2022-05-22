@@ -1,31 +1,29 @@
-#include <SDL2/SDL.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
-#include "basics.h"
+#include "Square.h"
 #include "Platform.h"
 
-void Platform::draw_platform(int filled,float width, float height, float x, float y) 
-{
-    if(filled) 
-    {
-        glBegin(GL_QUADS);
-    }
-    else 
-    {
-        glBegin(GL_LINE_LOOP);
-    }
-
-    glVertex2f(x-0.5*width,y+0.5*height);
-    glVertex2f(x+0.5*width,y+0.5*height);
-    glVertex2f(x+0.5*width,y-0.5*height);
-    glVertex2f(x-0.5*width,y-0.5*height);
-    
-    glColor3f(0.1, 0.2, 0.5);
-
-    glEnd();
-    
+Platform::Platform(int width, int height, Position current_pos){
+    this->width = width ; 
+    this->height = height ; 
+    this->current_pos = current_pos ; 
 }
+
+Platform::Platform(){ 
+}
+
+/*
+void Platform::set_pos_x(float x){
+    this->current_pos.x = x;
+}
+
+void Platform::set_pos_y(float y){
+    this->current_pos.y = y;
+}
+
+void Platform::move_y(float y){
+    this->current_pos.y+=y;
+}
+
+void Platform::move_x(float x){
+    this->current_pos.x+=x;
+}
+*/

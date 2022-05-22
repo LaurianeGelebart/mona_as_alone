@@ -1,17 +1,15 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include "Square.h"
 #include "geometry.h"
 #include "color.h"
 
-class Character
+class Character : public Square 
 {
     private : 
-        int width;
-        int height;
         Position start_pos;
         Position end_pos;
-        
         Color color;
         const Uint8* keystate;
     

@@ -6,7 +6,10 @@
 class Camera2D
 {
     public :
-    Position pos;
+        Position pos;
+        void set_position(Position pos) ; 
+
 };
+
 
 #endif

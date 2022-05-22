@@ -1,1 +1,1 @@
-Menu.o: Menu.cpp Menu.h Scene.h geometry.h
+Menu.o: Menu.cpp Menu.h Scene.h Square.h geometry.h
