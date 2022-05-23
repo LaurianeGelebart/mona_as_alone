@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
@@ -78,8 +79,6 @@ int main(int argc, char** argv)
             return EXIT_FAILURE;
         }
     }    
-  
-    float alpha=0.0; //DEBUG
 
     Menu* menu = new Menu();
     Level* tab_level[12] ;
@@ -182,10 +181,10 @@ int main(int argc, char** argv)
     square11.pos_square.y=26.25;
     tab_square[10]=square11;*/
 
-    Platform square11 = Platform(30, 2.5, {160+15*sin(alpha), 26.25});
+    Platform square11 = Platform(30, 2.5, {160+15*sin(0.0), 26.25});
     tab_square[10]=square11;  
 
-    Platform square12 = Platform(20, 2.5, {190, 46.25+12.5*sin(alpha)});
+    Platform square12 = Platform(20, 2.5, {190, 46.25+12.5*sin(0.0)});
     tab_square[11]=square12;  
 
     //Création du niveau 1
@@ -233,13 +232,9 @@ int main(int argc, char** argv)
 
         //Calcul du temps ecoule
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
-        alpha = SDL_GetTicks()*0.0005*2*M_PI;
-
-
-        //Calcul du x de la plateforme moche pas ici
-        tab_square[11].set_pos_y(46.25+12.5*sin(alpha));
-        tab_square[10].set_pos_x(160+15*sin(alpha));
-        
+        if (!(environment.is_in_menu())){
+            ((Level*)environment.get_current_scene())->set_alpha(SDL_GetTicks()*0.0005*2*M_PI); 
+        }        
 
         //Si trop peu de temps s'est ecoule, on met en pause le programme 
         if(elapsedTime < FRAMERATE_MILLISECONDS) 

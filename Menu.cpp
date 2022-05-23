@@ -30,8 +30,8 @@ void Menu::draw(){
 
   //  drawSquare(fond); 
 
-  this->arrow_left.drawSquare(); 
-  this->arrow_right.drawSquare(); 
+  this->arrow_left.draw_square(); 
+  this->arrow_right.draw_square(); 
 
 }
 

@@ -3,21 +3,31 @@
 #include "Square.h"
 
 
-void Square::drawSquare() 
+void Square::draw_square() 
 {
+
+    /*glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D,this->textID);*/
+
     float tab_pos[4]; 
     get_positions(tab_pos);
 
     glBegin(GL_QUADS);
-
+    glTexCoord2f(0.,0.);
     glVertex2f(tab_pos[0],tab_pos[3]);
+    glTexCoord2f(1.,0.);
     glVertex2f(tab_pos[1],tab_pos[3]);
+    glTexCoord2f(1.,1.);
     glVertex2f(tab_pos[1],tab_pos[2]);
+    glTexCoord2f(0.,1.);
     glVertex2f(tab_pos[0],tab_pos[2]);
     
     glColor3f(0.1, 0.2, 0.5);
 
     glEnd();
+
+    /*glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);*/    
     
 }
 

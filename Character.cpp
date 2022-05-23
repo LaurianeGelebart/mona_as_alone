@@ -19,7 +19,6 @@ Character::Character (int height, int width, Position pos, Position final_pos)
     this->acc = {0, -g};
     this->speed = {0,0};
     this->keystate = SDL_GetKeyboardState(NULL);
-
 }
 
 void Character::move(float accx)
