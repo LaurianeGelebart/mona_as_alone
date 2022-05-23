@@ -92,7 +92,7 @@ void Character::draw_character(int filled)
     glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
     
     
-    glColor3f(this->color.r, this->color.g, this->color.b);
+    //glColor3f(this->color.r, this->color.g, this->color.b);
 
     glEnd(); 
 }

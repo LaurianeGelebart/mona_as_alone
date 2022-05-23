@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include "Menu.h"
 
-class Game_Environment 
+class Game_Environment
 {
     private: 
         Menu* menu ; 
@@ -19,7 +19,7 @@ class Game_Environment
         Scene * get_current_scene();
         void change_to_menu();
         void change_to_level(int level);
-        GLuint gentexture(std::string path);
+        static GLuint gentexture(std::string path);
         void manageEvents();
         void draw();
         int is_playing();
