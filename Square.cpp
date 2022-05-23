@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 
 #include "Square.h"
+#include "geometry.h"
 
 
 void Square::draw_square() 
@@ -10,7 +11,12 @@ void Square::draw_square()
     glBindTexture(GL_TEXTURE_2D,this->textID);*/
 
     float tab_pos[4]; 
-    get_positions(tab_pos);
+
+    tab_pos[0] = this->current_pos.x-0.5*this->width ; 
+    tab_pos[1] = this->current_pos.x+0.5*this->width ; 
+
+    tab_pos[2] = this->current_pos.y-0.5*this->height ; 
+    tab_pos[3] = this->current_pos.y+0.5*this->height ; 
 
     glBegin(GL_QUADS);
     glTexCoord2f(0.,0.);
@@ -39,14 +45,48 @@ Square::Square(int width, int height, Position current_pos){
     this->current_pos = current_pos ; 
 }
 
-void Square::get_positions(float* tab_pos){
+int Square::get_width(){
+    return this->width;
+}
 
-    tab_pos[0] = this->current_pos.x-0.5*this->width ; 
-    tab_pos[1] = this->current_pos.x+0.5*this->width ; 
+int Square::get_height(){
+    return this->height;
+}
 
-    tab_pos[2] = this->current_pos.y-0.5*this->height ; 
-    tab_pos[3] = this->current_pos.y+0.5*this->height ; 
+Position Square::get_left_upper_corner(){
+    Position pos ; 
 
+    pos.x = this->current_pos.x-0.5*this->width ; 
+    pos.y = this->current_pos.y+0.5*this->height ; 
+
+   return pos ; 
+}
+
+Position Square::get_right_upper_corner(){
+    Position pos ; 
+
+    pos.x = this->current_pos.x+0.5*this->width ; 
+    pos.y = this->current_pos.y+0.5*this->height ; 
+
+   return pos ; 
+}
+
+Position Square::get_left_lower_corner(){
+    Position pos ; 
+
+    pos.x = this->current_pos.x-0.5*this->width ; 
+    pos.y = this->current_pos.y-0.5*this->height ; 
+
+   return pos ; 
+}
+
+Position Square::get_right_lower_corner(){
+    Position pos ; 
+
+    pos.x = this->current_pos.x+0.5*this->width ; 
+    pos.y = this->current_pos.y-0.5*this->height ; 
+
+   return pos ; 
 }
 
 Position Square::get_current_pos() {

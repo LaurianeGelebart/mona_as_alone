@@ -9,9 +9,9 @@ Menu::Menu(){
     this->selected_level = 0 ; 
     this->nb_levels = 3 ;
     
-    Square left = Square(4, 5, {105, 75});
+    Square left = Square(4, 5, {105, 50});
 
-    Square right = Square(4, 5, {155, 75});
+    Square right = Square(4, 5, {155, 50});
 
     Square background  = Square(200, 200, {0, 0});
     

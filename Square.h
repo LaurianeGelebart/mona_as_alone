@@ -19,13 +19,18 @@ class Square
     public:
         void draw_square();
         Position get_current_pos(); 
-        void get_positions(float* tab_pos); 
+        Position get_right_upper_corner(); 
+        Position get_right_lower_corner(); 
+        Position get_left_lower_corner(); 
+        Position get_left_upper_corner(); 
         Square(int height, int width, Position pos);    
         Square();   
         void set_pos_x(float x);
         void set_pos_y(float y);
         void move_y(float y);
         void move_x(float x);
+        int get_height();
+        int get_width();
 
 }; 
 

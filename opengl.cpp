@@ -91,16 +91,19 @@ int main(int argc, char** argv)
     pos_chara1.y =5;
     Position end_pos_chara1;
     end_pos_chara1.x =30; 
-    end_pos_chara1.y =0.5;
+    end_pos_chara1.y =50;
     Vect acc1;
     acc1.x=0;
     acc1.y=1;
-    Character* chara1 = new Character(10,4,pos_chara1,end_pos_chara1);
+    Character* chara1 = new Character(10,4,{2,5},{30,5});
 
     Position pos_chara2;    
     pos_chara1.x =2;
-    pos_chara1.y =50;
-    Character* chara2 = new Character(5,7,pos_chara1,end_pos_chara1);
+    pos_chara1.y =50; 
+    Position end_pos_chara2;
+    end_pos_chara1.x =30; 
+    end_pos_chara1.y =50;
+    Character* chara2 = new Character(5,7,{2,50},{60,5});
 
     Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
@@ -108,7 +111,6 @@ int main(int argc, char** argv)
     Platform tab_square[12] ; 
 
     Platform square1 = Platform(40, 15, {20, 7.5});
-    
     tab_square[0]=square1;
 /*
     Square square2;
@@ -220,11 +222,21 @@ int main(int argc, char** argv)
         if (environment.is_in_menu()){
             ((Menu*)environment.get_current_scene())->draw();
         } else {
-           ((Level*)environment.get_current_scene())->get_current_character()->set_position(); 
             for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
+                ((Level*)environment.get_current_scene())->tab_character[i]->set_old_position(tab_character[i]->get_current_pos()); 
                 ((Level*)environment.get_current_scene())->tab_character[i]->gravity(); 
-            } // printf("%p\n", tab_level);   
+            } 
+            ((Level*)environment.get_current_scene())->get_current_character()->set_position(); 
+            for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
+                    ((Level*)environment.get_current_scene())->collisions(tab_character[i]);
+                    for (int j=0; j<((Level*)environment.get_current_scene())->get_nb_character() ; j++) {
+                        if (j!=i){
+                            ((Level*)environment.get_current_scene())->collisions(tab_character[i]);
+                        }
+                    }
+            }  
             ((Level*)environment.get_current_scene())->draw();
+            environment.is_win();
         }
 
         //Echange du front et du back buffer : mise a jour de la fenetre

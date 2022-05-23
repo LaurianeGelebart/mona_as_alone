@@ -23,6 +23,7 @@ class Game_Environment
         void manageEvents();
         void draw();
         int is_playing();
+        void is_win() ; 
         void onWindowResized(unsigned int width, unsigned int height);
         int is_in_menu();
 };

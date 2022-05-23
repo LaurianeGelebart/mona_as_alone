@@ -31,6 +31,27 @@ void Character::jump(float accy)
     this->speed.y = accy;
 }
 
+Position Character::get_pos_end(){
+    return this->end_pos ; 
+}
+
+void Character::set_speed_x(float speed){
+    
+    this->speed.x=speed;
+}
+
+void Character::set_speed_y(float speed){
+    this->speed.y=speed;
+}
+
+float Character::get_speed_x(){
+    return this->speed.x;
+}
+
+float Character::get_speed_y(){
+    return this->speed.y;
+}
+
 void Character::set_position()
 {
     if (this->keystate[SDL_SCANCODE_LEFT]){
@@ -45,7 +66,14 @@ void Character::set_position()
     this->speed.x += (this->acc.x - this->speed.x*4)*delta_t;
 
     this->current_pos.x += this->speed.x*delta_t;
+}
 
+
+void Character::set_old_position(Position old_pos){
+    this->old_pos = old_pos ; 
+}
+Position Character::get_old_position(){
+    return this->old_pos ; 
 }
 
 void Character::gravity(){
@@ -69,6 +97,8 @@ void Character::gravity(){
             this->speed.y -= g*delta_t;
         }
     }  
+
+   // printf("\n\n %f \n\n", this->speed.y);
 }
 
 
@@ -97,6 +127,27 @@ void Character::draw_character(int filled)
     glEnd(); 
 }
 
+void Character::draw_end(){
+
+
+    glColor3f(0.40, 0.40, 0.40);
+
+    glBegin(GL_QUADS);
+     //glTexCoord2f(0.,0.);
+    glVertex2f( this->end_pos.x-0.5*this->width, this->end_pos.y+0.5*this->height);
+    //glTexCoord2f(1.,0.);
+    glVertex2f( this->end_pos.x+0.5*this->width, this->end_pos.y+0.5*this->height);
+    //glTexCoord2f(1.,1.);
+    glVertex2f( this->end_pos.x+0.5*this->width, this->end_pos.y-0.5*this->height);
+    //glTexCoord2f(0.,1.);
+    glVertex2f( this->end_pos.x-0.5*this->width, this->end_pos.y-0.5*this->height);
+
+
+    glColor3f(this->color.r, this->color.g, this->color.b);
+
+    glEnd(); 
+}
+
 
 void Character::manageEvents(SDL_Event e){
     if(e.type == SDL_KEYDOWN){
@@ -108,22 +159,3 @@ void Character::manageEvents(SDL_Event e){
     }
 }
 
-/*
-bool verif_intersection(Character R1,Square R2){
-    float x1min = R1.get_current_pos().x+0.5*R1.width; 
-    float x1max = R1.current_pos.x-0.5*R1.width; 
-    float y1min = R1.current_pos.x-0.5*R1.width; 
-    float y1max = R1.current_pos.x+0.5*R1.width; 
-
-    float x2min = R2.pos_square.x+0.5*R2.width; 
-    float x2max = R2.pos_square.x-0.5*R2.width; 
-    float y2min = R2.pos_square.x-0.5*R2.width; 
-    float y2max = R2.pos_square.x+0.5*R2.width; 
-
-    if y1max  < y2min : return false  // (1)
-    if y1min > y2max  : return false  // (2)
-    if x1min > x2max  : return false  // (3)
-    if x1max  < x2min : return false  // (4)
-    
-    return true  // non empty intersection
-}*/

@@ -18,7 +18,9 @@ void Game_Environment::change_to_menu(){
 
 void Game_Environment::change_to_level(int level){
 	this->current_scene = this->tab_level[level] ; 
+	((Level*)this->get_current_scene())->reset_level(); 
 }
+
 Scene * Game_Environment::get_current_scene(){ 
 	return this->current_scene ; 
 } 
@@ -103,22 +105,22 @@ void Game_Environment::manageEvents(){
 			default:
 			break;
 		}
-	}
-
-	
+	}	
 }
 
 int Game_Environment::is_playing(){
-	if(this->is_in_menu() ){
-		if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){
-			return 0 ; 
-		}
-	}
 	return this->game_loop;
 }
 
 int Game_Environment::is_in_menu(){
 	return this->current_scene == this->menu;
+}
+
+void Game_Environment::is_win(){
+	//printf("\n%d, %d\n", ((Level*)this->get_current_scene())->get_nb_character_end(), ((Level*)this->get_current_scene())->get_nb_character() ); 
+	if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){
+		this->change_to_menu();
+	}
 }
 
 void Game_Environment::onWindowResized(unsigned int width, unsigned int height)

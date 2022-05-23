@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include "Character.h"
+#include "Platform.h"
 #include "Scene.h"
 #include "Camera2D.h"
 
@@ -24,11 +25,17 @@ class Level : public Scene
         void set_alpha(float alpha);
         void manageEvents(SDL_Event);
         int get_nb_character();
+        int get_nb_square();
         int get_nb_character_end();
+        void reset_level() ; 
+        int verif_intersection(Character* R1,Square R2);
         Character* get_current_character();
         void draw();
         Character** tab_character ; 
         Square* tab_square ;
+
+        void collisions(Character* chara); 
+        bool opposite_side(Position A,Position B,Position M,Position P);
         
 };
 

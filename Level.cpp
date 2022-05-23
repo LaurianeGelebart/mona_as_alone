@@ -5,6 +5,7 @@
 #include "Level.h"
 #include "Character.h"
 #include "geometry.h"
+#include "Platform.h"
 #include "Camera2D.h"
 
 Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character)
@@ -15,8 +16,13 @@ Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int 
     this->nb_character = nb_character ; 
     this->selected_character = 0;
     this->current_character = tab_character[this->selected_character]; 
-    this->nb_character_end = 2 ;
+    this->nb_character_end = 0 ;
     this->alpha = 0.0;
+}
+
+int Level::get_nb_square()
+{
+    return this->nb_square;
 }
 
 void Level::set_current_character(int new_current)
@@ -47,6 +53,16 @@ int Level::get_nb_character(){
     return this->nb_character;
 }
 
+void Level::reset_level(){
+    this->selected_character = 0;
+    this->current_character = tab_character[this->selected_character]; 
+    this->nb_character_end = 0 ;
+    this->alpha = 0.0;
+    for (int i=0 ; i < this->nb_character; i++){
+        (this->tab_character[i])->set_pos_x(5+i*30); 
+        (this->tab_character[i])->set_pos_y(50+i*10); 
+    }
+}
 
 void Level::manageEvents(SDL_Event e)
 {   
@@ -55,6 +71,16 @@ void Level::manageEvents(SDL_Event e)
         this->set_current_character(this->selected_character);
     }else {
         this->current_character->manageEvents(e);
+    }
+
+    // is_win function 
+    int c_posX = current_character->get_current_pos().x ; 
+    int c_posY = current_character->get_current_pos().y ; 
+    int e_posX = current_character->get_pos_end().x ; 
+    int e_posY = current_character->get_pos_end().y ; 
+
+    if( c_posX == e_posX && c_posY == e_posY){
+        this->nb_character_end += 1 ;
     }
     
 }
@@ -65,16 +91,17 @@ void Level::draw()
     tab_square[10].set_pos_x(160+15*sin(this->alpha));
         
 
-    this->level_cam.set_position(current_character->current_pos);
-    this->current_character->draw_character(1);
+    this->level_cam.set_position({current_character->get_current_pos().x-30,current_character->get_current_pos().y});
+   // this->current_character->draw_character(1);
     
     glPushMatrix();
     glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.2,0);
 
     for (int i=0 ; i < this->nb_character; i++){
-        if (selected_character != i){
+      //  if (selected_character != i){
+          this->tab_character[i]->draw_end();
           (this->tab_character[i])->draw_character(1); 
-        }
+      //  }
     }
     for (int i=0 ; i<this->nb_square ; i++){
         this->tab_square[i].draw_square(); 
@@ -83,4 +110,96 @@ void Level::draw()
     
 }
 
+void Level::collisions(Character* chara){
+    for (int j=0 ; j< this->nb_square ; j++) {
+        
+        switch (this->verif_intersection(chara,tab_square[j])) {
+            case 4 : 
+                //pas de collision
+            break ; 
+            case 0:
+                 chara->set_pos_y(this->tab_square[j].get_current_pos().y+this->tab_square[j].get_height()*0.5+chara->get_height()*0.5)  ;
+                 chara->set_speed_y(0);
+                 
+                 break;
+            case 1:
+                chara->set_pos_x(this->tab_square[j].get_current_pos().x+this->tab_square[j].get_width()*0.5+chara->get_width()*0.5)  ;
+                chara->set_speed_x(-chara->get_speed_x());
+                 break;
+            case 2:
+                chara->set_pos_y(this->tab_square[j].get_current_pos().y-this->tab_square[j].get_height()*0.5-chara->get_height()*0.5)  ;
+                chara->set_speed_y(0);
+                 break;
+            case 3:
+                chara->set_pos_x(this->tab_square[j].get_current_pos().x-this->tab_square[j].get_width()*0.5-chara->get_width()*0.5)  ;
+                chara->set_speed_x(-chara->get_speed_x());
+                 
+                 break;
+
+        }
+
+
+    }; 
+    for (int j=0 ; j< this->nb_character ; j++) {
+        if (selected_character != j){
+        switch (this->verif_intersection(chara,*(Square*)tab_character[j])) {
+            case 4 : 
+                //pas de collision
+            break ; 
+            case 0:
+                 chara->set_pos_y(this->tab_character[j]->get_current_pos().y+(*(Square*)this->tab_character[j]).get_height()*0.5+chara->get_height()*0.5)  ;
+                 chara->set_speed_y(0);
+                 
+                 break;
+            case 1:
+                chara->set_pos_x(this->tab_character[j]->get_current_pos().x+(*(Square*)this->tab_character[j]).get_width()*0.5+chara->get_width()*0.5)  ;
+                chara->set_speed_x(-chara->get_speed_x());
+                 break;
+            case 2:
+                chara->set_pos_y(this->tab_character[j]->get_current_pos().y-(*(Square*)this->tab_character[j]).get_height()*0.5-chara->get_height()*0.5)  ;
+                chara->set_speed_y(0);
+                 break;
+            case 3:
+                chara->set_pos_x(this->tab_character[j]->get_current_pos().x-(*(Square*)this->tab_character[j]).get_width()*0.5-chara->get_width()*0.5)  ;
+                chara->set_speed_x(-chara->get_speed_x());
+                 
+                 break;
+
+        }
+        }
+    }
+}
+
+bool Level::opposite_side(Position A,Position B,Position M,Position P){
+    Position AB = B-A;
+    Position AM = M-A;
+    Position AP = P-A;
+    float r1 = AB ^ AM;
+    float r2 = AB ^ AP;
+    return (r1*r2 < 0) ;    // retourne vrai si les signes de r1 et r2 sont +    // retourne vrai si les signes de r1 et r2 sont -
+
+}
+
+int Level::verif_intersection(Character* R1,Square R2){
+/*
+    if (R1.get_left_upper_corner().y < R2.get_left_lower_corner().y ) {return false ;}  // (1)
+    if (R1.get_left_lower_corner().y > R2.get_left_upper_corner().y )  {return false ;}   // (2)
+    if (R1.get_left_upper_corner().x > R2.get_right_upper_corner().x )  {return false ;}   // (3)
+    if (R1.get_right_upper_corner().x < R2.get_left_upper_corner().x )  {return false ;}   // (4)
+    */
+
+   Position tab_R1[4] = {R1->get_left_upper_corner() , R1->get_right_upper_corner(), R1->get_right_lower_corner(), R1->get_left_lower_corner()} ; 
+   Position tab_R2[4] = {R2.get_left_upper_corner() , R2.get_right_upper_corner(), R2.get_right_lower_corner(), R2.get_left_lower_corner()} ; 
+
+   for (int i=0 ; i<3 ; i++){
+       
+        for (int j=0 ; j<3 ; j++){
+            if (opposite_side(tab_R2[j%4],tab_R2[(j+1)%4],tab_R1[i%4],tab_R1[(i+1)%4])  &&  opposite_side(tab_R1[i],tab_R1[i+1],tab_R2[j],tab_R2[j+1])){
+                return j;
+            }
+
+        }
+    }
+       return 4;
+   }
 

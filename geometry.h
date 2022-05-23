@@ -16,17 +16,8 @@ struct Vect
 
 typedef Vect Position;
 
-/*
-struct Square
-{
-    int width; 
-    int height; 
-    Position pos_square; 
-};
-
-
-void drawSquare(Square) ;
-
-*/
+Position operator + (Position a, Position b); 
+Position operator - (Position a, Position b); 
+float operator ^ (Position a, Position b); 
 
 #endif

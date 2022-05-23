@@ -1,19 +1,19 @@
 #include "geometry.h"
 
-/*
-
-void drawSquare(Square square) 
+Position operator + (Position a, Position b)
 {
-    glBegin(GL_QUADS);
-
-    glColor3f(0.1, 0.2, 0.5);
-    
-    glVertex2f(square.pos_square.x-0.5*square.width,square.pos_square.y+0.5*square.height);
-    glVertex2f(square.pos_square.x+0.5*square.width,square.pos_square.y+0.5*square.height);
-    glVertex2f(square.pos_square.x+0.5*square.width,square.pos_square.y-0.5*square.height);
-    glVertex2f(square.pos_square.x-0.5*square.width,square.pos_square.y-0.5*square.height);
-
-    glEnd();
-    
+        Position temp = Position{a.x + b.x ,  a.y + b.y} ; 
+        return temp;
 }
-*/
+
+Position operator - (Position a, Position b)
+{
+        Position temp = Position{a.x - b.x ,  a.y - b.y} ; 
+        return temp;
+}
+
+float operator ^ (Position a, Position b)
+{
+        float temp = a.x * b.y - a.y * b.x ; 
+        return temp;
+}
