@@ -96,11 +96,15 @@ int main(int argc, char** argv)
     acc1.x=0;
     acc1.y=1;
     Character* chara1 = new Character(10,4,pos_chara1,end_pos_chara1);
+    chara1->get_textID();
+    chara1->set_textID(Game_Environment::gentexture("images/character1.png"));
 
     Position pos_chara2;    
     pos_chara1.x =2;
     pos_chara1.y =50;
     Character* chara2 = new Character(5,7,pos_chara1,end_pos_chara1);
+    chara2->get_textID();
+    chara2->set_textID(Game_Environment::gentexture("images/character2.png"));
 
     Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 

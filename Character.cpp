@@ -56,6 +56,7 @@ void Character::gravity(){
     {
         this->current_pos.y = 5;
         this->speed.y = 0;
+        this->_injump = false;
     }
    
     if(this->speed.y > 0)
@@ -72,41 +73,47 @@ void Character::gravity(){
 }
 
 
-void Character::draw_character(int filled)
+void Character::draw_character()
 {
-    if(filled) 
-    {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D,this->_textID);
+
         glBegin(GL_QUADS);
-    }
-    else 
-    {
-        glBegin(GL_LINE_LOOP);
-    }
-    //glTexCoord2f(0.,0.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,0.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,1.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
-    //glTexCoord2f(0.,1.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
+        glTexCoord2f(0.,0.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
+        glTexCoord2f(1.,0.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
+        glTexCoord2f(1.,1.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
+        glTexCoord2f(0.,1.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
     
     
     //glColor3f(this->color.r, this->color.g, this->color.b);
-
-    glEnd(); 
+        
+        glEnd(); 
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D); 
 }
 
 
 void Character::manageEvents(SDL_Event e){
     if(e.type == SDL_KEYDOWN){
         // printf("touche pressee (code = %d)\n", e.key.keysym.sym);
-        if (e.key.keysym.sym == SDLK_UP)
+        if (e.key.keysym.sym == SDLK_UP && !this->_injump)
         {
             this->jump(70);
+            this->_injump = true;
         }
     }
 }
+
+/*bool Character::get_isjumping(){
+    return _injump;
+}
+void Character::set_jump(bool jump){
+    _injump = jump;
+}*/
 
 /*
 bool verif_intersection(Character R1,Square R2){

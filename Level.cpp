@@ -66,14 +66,14 @@ void Level::draw()
         
 
     this->level_cam.set_position(current_character->current_pos);
-    this->current_character->draw_character(1);
+    this->current_character->draw_character();
     
     glPushMatrix();
     glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.2,0);
 
     for (int i=0 ; i < this->nb_character; i++){
         if (selected_character != i){
-          (this->tab_character[i])->draw_character(1); 
+          (this->tab_character[i])->draw_character(); 
         }
     }
     for (int i=0 ; i<this->nb_square ; i++){
