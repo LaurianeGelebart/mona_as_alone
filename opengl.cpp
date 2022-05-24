@@ -81,7 +81,7 @@ int main(int argc, char** argv)
     }    
 
     Menu* menu = new Menu();
-    Level* tab_level[12] ;
+    Level* tab_level[3] ;
 
     ////////////////////////////////////////////
     //A mettre dans Make level 
@@ -94,27 +94,54 @@ int main(int argc, char** argv)
     Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
     tab_character[1] = chara2 ; 
-    Platform tab_square[12] ; 
+    
+    Platform tab_square3[12] ; 
+    
+    Platform square31 = Platform(40, 15, {20, 7.5});
+    tab_square3[0]=square31;
 
-    Platform square1 = Platform(40, 15, {20, 7.5});
-    tab_square[0]=square1;
+    Platform square32 = Platform(35, 15, {72.5, 7.5});
+    tab_square3[1]=square32;
 
+    Platform square33 = Platform(20, 32.5, {160, 48.75});
+    tab_square3[2]=square33;
 
-    Platform square11 = Platform(30, 2.5, {160+15*sin(0.0), 26.25});
-    tab_square[10]=square11;  
+    Platform square34 = Platform(40, 27.5, {110, 13.75});
+    tab_square3[3]=square34;
 
-    Platform square12 = Platform(20, 2.5, {190, 46.25+12.5*sin(0.0)});
-    tab_square[11]=square12;  
+    Platform square35 = Platform(50, 15, {105, 57.5});
+    tab_square3[4]=square35;
+
+    Platform square36 = Platform(80, 25, {40, 62.5});
+    tab_square3[5]=square36;
+
+    Platform square37 = Platform(10, 2.5, {145, 38.75});
+    tab_square3[6]=square37;
+
+    Platform square38 = Platform(30, 27.5, {205, 13.75});
+    tab_square3[7]=square38;
+
+    Platform square39 = Platform(10, 5, {175, 62.25});
+    tab_square3[8]=square39;
+
+    Platform square310 = Platform(12.5, 2.5, {136, 51});
+    tab_square3[9]=square310;
+
+    Platform square311 = Platform(30, 2.5, {(float) (160+15*sin(0.0)), 26.25});
+    tab_square3[10]=square311;  
+
+    Platform square312 = Platform(20, 2.5, {190,(float) (46.25+12.5*sin(0.0))});
+    tab_square3[11]=square312;
 
     //Création du niveau 1
-    Level* level1 = new Level(tab_square, tab_character, 12, 2);
-    Level* level2 = new Level(tab_square, tab_character, 12, 2);
+    Level* level1 = new Level(tab_square3, tab_character, 12, 2);
+    Level* level2 = new Level(tab_square3, tab_character, 12, 2);
+    Level* level3 = new Level(tab_square3, tab_character, 12, 2);
     tab_level[0] = level1 ;   
-    tab_level[1] = level2 ; 
+    tab_level[1] = level2 ;   
+    tab_level[2] = level3 ; 
     //////////////////////////////////////////
-    
-
-  // makeLevel(tab_level);
+ 
 
     Game_Environment environment = Game_Environment(tab_level, menu);
     environment.change_to_level(0); 
@@ -130,7 +157,6 @@ int main(int argc, char** argv)
         //Recuperation du temps au debut de la boucle
         Uint32 startTime = SDL_GetTicks();
         
-        /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();       
