@@ -134,8 +134,6 @@ void Level::collisions(Character* chara){
             break;
             case 2:
                 chara->set_pos_y(this->tab_square[j].get_current_pos().y - this->tab_square[j].get_height()*0.5-chara->get_height()*0.5)  ;
-                chara->set_speed_y(0);
-                chara->set_jump(0);
                 //printf("2"); 
             break;
             case 3:
@@ -190,14 +188,61 @@ int Level::verif_intersection(Character* R1,Square R2){
    Position tab_R1[4] = {R1->get_left_upper_corner() , R1->get_right_upper_corner(), R1->get_right_lower_corner(), R1->get_left_lower_corner()} ; 
    Position tab_R2[4] = {R2.get_left_upper_corner() , R2.get_right_upper_corner(), R2.get_right_lower_corner(), R2.get_left_lower_corner()} ; 
 
+   float deplacement = 100; 
+   int indice = 4 ; 
+   float temp=0;
+
    for (int i=0 ; i<4 ; i++){
         for (int j=0 ; j<4 ; j++){
             if (opposite_side(tab_R2[j%4],tab_R2[(j+1)%4],tab_R1[i%4],tab_R1[(i+1)%4])  &&  opposite_side(tab_R1[i%4],tab_R1[(i+1)%4],tab_R2[j%4],tab_R2[(j+1)%4])){
-                if ( j != 0 ) printf("%d", j); 
-                return j;
+                printf("%d : j\n",j);
+                switch (j){
+                    case 0:
+                    printf("%f :0\n",temp);
+                    temp = R2.get_current_pos().y+0.5*R2.get_height()+0.5*R1->get_height()-R1->get_current_pos().y;
+                    printf("%f :0\n",temp);
+                    if (deplacement>temp){
+                        deplacement = temp;
+                        indice = j;
+                    }
+                    break;
+                    case 1:
+                    printf("%f :1\n",temp);
+                    temp = R2.get_current_pos().x+0.5*R2.get_width()+0.5*R1->get_width()-R1->get_current_pos().x;
+                    printf("%f :1\n",temp);
+                    if (deplacement>temp){
+                        deplacement = temp;
+                        indice = j;
+                    }
+                    break;
+                    case 2:
+                    printf("%f :2\n",temp);
+                    temp = R1->get_current_pos().y - (R2.get_current_pos().y-0.5*R2.get_height()-0.5*R1->get_height());
+                    printf("%f :2\n",temp);
+                    if (deplacement>temp){
+                        deplacement = temp;
+                        indice = j;
+                    }
+                    break;
+                    case 3:
+                    printf("%f :3\n",temp);
+                    temp = R1->get_current_pos().x - (R2.get_current_pos().x-0.5*R2.get_width()-0.5*R1->get_width());
+                    printf("%f :3\n",temp);
+                    if (deplacement>temp){
+                        deplacement = temp;
+                        indice = j;
+                    }
+                    break;
+
+
             }
+                    
+                
+                
+            }
+ 
         }   
     }
-       return 4;
+       return indice;
    }
 
