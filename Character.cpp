@@ -20,6 +20,7 @@ Character::Character (int height, int width, Position pos, Position final_pos)
     this->speed = {0,0};
     this->keystate = SDL_GetKeyboardState(NULL);
     this->has_win = 0 ; 
+    this->in_jump = 0 ; 
 }
 
 void Character::move(float accx)
@@ -77,15 +78,6 @@ void Character::set_position()
     this->current_pos.x += this->speed.x*delta_t;
 }
 
-
-void Character::set_old_position(Position old_pos){
-    this->old_pos = old_pos ; 
-}
-
-Position Character::get_old_position(){
-    return this->old_pos ; 
-}
-
 Position Character::get_start_pos(){
     return this->start_pos;
 }
@@ -93,12 +85,6 @@ Position Character::get_start_pos(){
 void Character::gravity(){
     this->speed.y += this->acc.y*delta_t;
     this->current_pos.y += this->speed.y*delta_t;
-
-    if(this->current_pos.y < 5)
-    {
-        this->current_pos.y = 5;
-        this->speed.y = 0;
-    }
    
     if(this->speed.y > 0)
     { 
@@ -112,39 +98,42 @@ void Character::gravity(){
         }
     }  
 
+     if(this->current_pos.y < 0 -0.5*this->width)
+    {
+        this->current_pos = {5, 30}; 
+    }
+
    // printf("\n\n %f \n\n", this->speed.y);
 }
 
 
-void Character::draw_character(int filled)
+void Character::draw_character()
 {
-    if(filled) 
-    {
-        glBegin(GL_QUADS);
-    }
-    else 
-    {
-        glBegin(GL_LINE_LOOP);
-    }
-    //glTexCoord2f(0.,0.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,0.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,1.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
-    //glTexCoord2f(0.,1.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
-    
-    
-    glColor3f(this->color.r, this->color.g, this->color.b);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D,this->_textID);
 
-    glEnd(); 
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.,0.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
+        glTexCoord2f(1.,0.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
+        glTexCoord2f(1.,1.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
+        glTexCoord2f(0.,1.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
+    
+    
+    //glColor3f(this->color.r, this->color.g, this->color.b);
+        
+        glEnd(); 
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D); 
 }
 
 void Character::draw_end_pos(){
 
 
-    glColor3f(0.40, 0.40, 0.40);
+   // glColor3f(0.40, 0.40, 0.40);
 
     glBegin(GL_QUADS);
      //glTexCoord2f(0.,0.);
@@ -157,7 +146,7 @@ void Character::draw_end_pos(){
     glVertex2f( this->end_pos.x-0.5*this->width, this->end_pos.y-0.5*this->height);
 
 
-    glColor3f(this->color.r, this->color.g, this->color.b);
+   // glColor3f(this->color.r, this->color.g, this->color.b);
 
     glEnd(); 
 }
@@ -166,10 +155,17 @@ void Character::draw_end_pos(){
 void Character::manageEvents(SDL_Event e){
     if(e.type == SDL_KEYDOWN){
         // printf("touche pressee (code = %d)\n", e.key.keysym.sym);
-        if (e.key.keysym.sym == SDLK_UP)
+        if (e.key.keysym.sym == SDLK_UP && !this->in_jump)
         {
             this->jump(70);
+            this->in_jump = true;
         }
     }
 }
 
+bool Character::get_isjumping(){
+    return this->in_jump;
+}
+void Character::set_jump(bool jump){
+    this->in_jump = jump;
+}

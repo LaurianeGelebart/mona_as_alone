@@ -87,9 +87,11 @@ int main(int argc, char** argv)
     //A mettre dans Make level 
     ////////////////////////////////////////////
 
-    Character* chara1 = new Character(10,4,{2,50},{30,5});
+    Character* chara1 = new Character(11,7,{10,30},{30,5});  
+    chara1->set_textID(Game_Environment::gentexture("images/character1.png"));
 
-    Character* chara2 = new Character(5,7,{20,50},{60,5});
+    Character* chara2 = new Character(5,7,{30,50},{60,5});
+    chara2->set_textID(Game_Environment::gentexture("images/character2.png"));
 
     Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
@@ -106,7 +108,7 @@ int main(int argc, char** argv)
     Platform square33 = Platform(20, 32.5, {160, 48.75});
     tab_square3[2]=square33;
 
-    Platform square34 = Platform(40, 27.5, {110, 13.75});
+    Platform square34 = Platform(46, 27.5, {110, 13.75});
     tab_square3[3]=square34;
 
     Platform square35 = Platform(50, 15, {105, 57.5});
@@ -166,7 +168,6 @@ int main(int argc, char** argv)
             ((Menu*)environment.get_current_scene())->draw();
         } else {
             for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
-                ((Level*)environment.get_current_scene())->tab_character[i]->set_old_position(tab_character[i]->get_current_pos()); 
                 ((Level*)environment.get_current_scene())->tab_character[i]->gravity(); 
             } 
             ((Level*)environment.get_current_scene())->get_current_character()->set_position(); 
@@ -200,7 +201,8 @@ int main(int argc, char** argv)
     /* ------------------------------ FIN LOOP ------------------------------ */
 
 
-    /* Liberation des ressources associees a la SDL */ 
+    /* Liberation des ressources associees a la SDL */
+    
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();

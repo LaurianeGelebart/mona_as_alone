@@ -104,7 +104,7 @@ void Level::draw()
 
     for (int i=0 ; i < this->nb_character; i++){
         this->tab_character[i]->draw_end_pos();
-        this->tab_character[i]->draw_character(1); 
+        this->tab_character[i]->draw_character(); 
     }
     for (int i=0 ; i<this->nb_square ; i++){
         this->tab_square[i].draw_square(); 
@@ -114,35 +114,38 @@ void Level::draw()
 }
 
 void Level::collisions(Character* chara){
-    for (int j=0 ; j< this->nb_square ; j++) {
-        
+
+    //collisions character/platform
+    for (int j=0 ; j< this->nb_square ; j++) {   
         switch (this->verif_intersection(chara,tab_square[j])) {
             case 4 : 
                 //pas de collision
             break ; 
             case 0:
-                 chara->set_pos_y(this->tab_square[j].get_current_pos().y+this->tab_square[j].get_height()*0.5+chara->get_height()*0.5)  ;
+                 chara->set_pos_y(this->tab_square[j].get_current_pos().y + this->tab_square[j].get_height()*0.5+chara->get_height()*0.5)  ;
                  chara->set_speed_y(0);
-                 
-                 break;
+                 chara->set_jump(0);  
+                //printf("0");                
+            break;
             case 1:
-                chara->set_pos_x(this->tab_square[j].get_current_pos().x+this->tab_square[j].get_width()*0.5+chara->get_width()*0.5)  ;
+                chara->set_pos_x(this->tab_square[j].get_current_pos().x + this->tab_square[j].get_width()*0.5+chara->get_width()*0.5)  ;
                 chara->set_speed_x(-chara->get_speed_x());
-                 break;
+                //printf("1"); 
+            break;
             case 2:
-                chara->set_pos_y(this->tab_square[j].get_current_pos().y-this->tab_square[j].get_height()*0.5-chara->get_height()*0.5)  ;
+                chara->set_pos_y(this->tab_square[j].get_current_pos().y - this->tab_square[j].get_height()*0.5-chara->get_height()*0.5)  ;
                 chara->set_speed_y(0);
-                 break;
+                chara->set_jump(0);
+                //printf("2"); 
+            break;
             case 3:
-                chara->set_pos_x(this->tab_square[j].get_current_pos().x-this->tab_square[j].get_width()*0.5-chara->get_width()*0.5)  ;
+                chara->set_pos_x(this->tab_square[j].get_current_pos().x - (this->tab_square[j].get_width()*0.5 + chara->get_width()*0.5))  ;
                 chara->set_speed_x(-chara->get_speed_x());
-                 
-                 break;
-
+                //printf("%f\n", tab_square[j].get_current_pos().x - 0.5*tab_square[j].get_width()); 
+            break;
         }
-
-
-    }; 
+    } 
+    //collisions character/character
     for (int j=0 ; j< this->nb_character ; j++) {
         if (selected_character != j){
         switch (this->verif_intersection(chara,*(Square*)tab_character[j])) {
@@ -152,22 +155,21 @@ void Level::collisions(Character* chara){
             case 0:
                  chara->set_pos_y(this->tab_character[j]->get_current_pos().y+(*(Square*)this->tab_character[j]).get_height()*0.5+chara->get_height()*0.5)  ;
                  chara->set_speed_y(0);
-                 
-                 break;
+                 chara->set_jump(0);                 
+            break;
             case 1:
                 chara->set_pos_x(this->tab_character[j]->get_current_pos().x+(*(Square*)this->tab_character[j]).get_width()*0.5+chara->get_width()*0.5)  ;
                 chara->set_speed_x(-chara->get_speed_x());
-                 break;
+            break;
             case 2:
                 chara->set_pos_y(this->tab_character[j]->get_current_pos().y-(*(Square*)this->tab_character[j]).get_height()*0.5-chara->get_height()*0.5)  ;
                 chara->set_speed_y(0);
-                 break;
+                chara->set_jump(0);
+            break;
             case 3:
-                chara->set_pos_x(this->tab_character[j]->get_current_pos().x-(*(Square*)this->tab_character[j]).get_width()*0.5-chara->get_width()*0.5)  ;
+                chara->set_pos_x(this->tab_character[j]->get_current_pos().x - (*(Square*)this->tab_character[j]).get_width()*0.5-chara->get_width()*0.5)  ;
                 chara->set_speed_x(-chara->get_speed_x());
-                 
-                 break;
-
+            break;
         }
         }
     }
@@ -184,24 +186,17 @@ bool Level::opposite_side(Position A,Position B,Position M,Position P){
 }
 
 int Level::verif_intersection(Character* R1,Square R2){
-/*
-    if (R1.get_left_upper_corner().y < R2.get_left_lower_corner().y ) {return false ;}  // (1)
-    if (R1.get_left_lower_corner().y > R2.get_left_upper_corner().y )  {return false ;}   // (2)
-    if (R1.get_left_upper_corner().x > R2.get_right_upper_corner().x )  {return false ;}   // (3)
-    if (R1.get_right_upper_corner().x < R2.get_left_upper_corner().x )  {return false ;}   // (4)
-    */
 
    Position tab_R1[4] = {R1->get_left_upper_corner() , R1->get_right_upper_corner(), R1->get_right_lower_corner(), R1->get_left_lower_corner()} ; 
    Position tab_R2[4] = {R2.get_left_upper_corner() , R2.get_right_upper_corner(), R2.get_right_lower_corner(), R2.get_left_lower_corner()} ; 
 
-   for (int i=0 ; i<3 ; i++){
-       
-        for (int j=0 ; j<3 ; j++){
-            if (opposite_side(tab_R2[j%4],tab_R2[(j+1)%4],tab_R1[i%4],tab_R1[(i+1)%4])  &&  opposite_side(tab_R1[i],tab_R1[i+1],tab_R2[j],tab_R2[j+1])){
+   for (int i=0 ; i<4 ; i++){
+        for (int j=0 ; j<4 ; j++){
+            if (opposite_side(tab_R2[j%4],tab_R2[(j+1)%4],tab_R1[i%4],tab_R1[(i+1)%4])  &&  opposite_side(tab_R1[i%4],tab_R1[(i+1)%4],tab_R2[j%4],tab_R2[(j+1)%4])){
+                if ( j != 0 ) printf("%d", j); 
                 return j;
             }
-
-        }
+        }   
     }
        return 4;
    }

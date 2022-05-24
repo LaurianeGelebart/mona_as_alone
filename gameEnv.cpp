@@ -24,6 +24,7 @@ void Game_Environment::change_to_level(int level){
 Scene * Game_Environment::get_current_scene(){ 
 	return this->current_scene ; 
 } 
+
 GLuint Game_Environment::gentexture(std::string path)
 {
 	
@@ -35,11 +36,13 @@ GLuint Game_Environment::gentexture(std::string path)
 	GLuint textureID;
 	glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D,textureID);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(
-        GL_TEXTURE_2D, 0, GL_RGBA,
+        GL_TEXTURE_2D, 0, GL_RGB,
         surface->w, surface->h, 0,
-        GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels
+        GL_RGB, GL_UNSIGNED_BYTE, surface->pixels
     );
     glBindTexture(GL_TEXTURE_2D, 0);
 	return textureID;

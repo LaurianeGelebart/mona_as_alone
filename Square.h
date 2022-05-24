@@ -8,13 +8,13 @@
 #include <stdio.h>
 #include "geometry.h"
 
-class Square 
+class Square
 {
     protected:
         int width; 
         int height; 
         Position current_pos;
-        GLuint textID;
+        GLuint _textID;
 
     public:
         void draw_square();
@@ -24,7 +24,9 @@ class Square
         Position get_left_lower_corner(); 
         Position get_left_upper_corner(); 
         Square(int height, int width, Position pos);    
-        Square();   
+        Square();
+        GLuint get_textID();
+        void set_textID(GLuint textID);
         void set_pos_x(float x);
         void set_pos_y(float y);
         void move_y(float y);

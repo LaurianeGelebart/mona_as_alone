@@ -5,6 +5,7 @@
 const double dt = 0.001;
 const double g = 80.0;
 
+
 /* Espace fenetre virtuelle */
 static const float GL_VIEW_SIZE = 100.;  
 

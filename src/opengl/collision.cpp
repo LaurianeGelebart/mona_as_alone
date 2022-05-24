@@ -71,7 +71,7 @@ int main(int nbarg, char** arglist){
 	speed.y = 0;
 	pos.x = (SCR_W-sqrectsize)/2;
 	pos.y = (SCR_H-sqrectsize)/2-50;
-	bool injump = false;
+	bool in_jump = false;
 	bool isFalling = false;
 	int jump = 0;
 	const int jumpHeight = 10;
