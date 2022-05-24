@@ -59,8 +59,9 @@ void Level::reset_level(){
     this->nb_character_end = 0 ;
     this->alpha = 0.0;
     for (int i=0 ; i < this->nb_character; i++){
-        (this->tab_character[i])->set_pos_x(5+i*30); 
-        (this->tab_character[i])->set_pos_y(50+i*10); 
+        (this->tab_character[i])->set_pos_x((this->tab_character[i])->get_start_pos().x); 
+        (this->tab_character[i])->set_pos_y((this->tab_character[i])->get_start_pos().y); 
+        (this->tab_character[i])->set_has_win(0); 
     }
 }
 
@@ -73,16 +74,20 @@ void Level::manageEvents(SDL_Event e)
         this->current_character->manageEvents(e);
     }
 
-    // is_win function 
+    verif_end_pos(); 
+ 
+}
+
+void Level::verif_end_pos(){
     int c_posX = current_character->get_current_pos().x ; 
     int c_posY = current_character->get_current_pos().y ; 
     int e_posX = current_character->get_pos_end().x ; 
     int e_posY = current_character->get_pos_end().y ; 
 
-    if( c_posX == e_posX && c_posY == e_posY){
+    if( (c_posX == e_posX && c_posY == e_posY) && !(current_character->get_has_win())){
+        current_character->set_has_win(1); 
         this->nb_character_end += 1 ;
     }
-    
 }
 
 void Level::draw()
@@ -98,10 +103,8 @@ void Level::draw()
     glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.2,0);
 
     for (int i=0 ; i < this->nb_character; i++){
-      //  if (selected_character != i){
-          this->tab_character[i]->draw_end();
-          (this->tab_character[i])->draw_character(1); 
-      //  }
+        this->tab_character[i]->draw_end_pos();
+        this->tab_character[i]->draw_character(1); 
     }
     for (int i=0 ; i<this->nb_square ; i++){
         this->tab_square[i].draw_square(); 

@@ -117,7 +117,6 @@ int Game_Environment::is_in_menu(){
 }
 
 void Game_Environment::is_win(){
-	//printf("\n%d, %d\n", ((Level*)this->get_current_scene())->get_nb_character_end(), ((Level*)this->get_current_scene())->get_nb_character() ); 
 	if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){
 		this->change_to_menu();
 	}

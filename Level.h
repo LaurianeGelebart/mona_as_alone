@@ -29,6 +29,7 @@ class Level : public Scene
         int get_nb_character_end();
         void reset_level() ; 
         int verif_intersection(Character* R1,Square R2);
+        void verif_end_pos();
         Character* get_current_character();
         void draw();
         Character** tab_character ; 

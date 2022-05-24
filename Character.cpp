@@ -19,6 +19,7 @@ Character::Character (int height, int width, Position pos, Position final_pos)
     this->acc = {0, -g};
     this->speed = {0,0};
     this->keystate = SDL_GetKeyboardState(NULL);
+    this->has_win = 0 ; 
 }
 
 void Character::move(float accx)
@@ -52,6 +53,14 @@ float Character::get_speed_y(){
     return this->speed.y;
 }
 
+bool Character::get_has_win(){
+    return this->has_win;
+}
+
+void Character::set_has_win(bool boolean){
+    this->has_win = boolean ; 
+}
+
 void Character::set_position()
 {
     if (this->keystate[SDL_SCANCODE_LEFT]){
@@ -72,8 +81,13 @@ void Character::set_position()
 void Character::set_old_position(Position old_pos){
     this->old_pos = old_pos ; 
 }
+
 Position Character::get_old_position(){
     return this->old_pos ; 
+}
+
+Position Character::get_start_pos(){
+    return this->start_pos;
 }
 
 void Character::gravity(){
@@ -127,7 +141,7 @@ void Character::draw_character(int filled)
     glEnd(); 
 }
 
-void Character::draw_end(){
+void Character::draw_end_pos(){
 
 
     glColor3f(0.40, 0.40, 0.40);
