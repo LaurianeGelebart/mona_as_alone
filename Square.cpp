@@ -69,9 +69,10 @@ void Square::move_x(float x){
     this->current_pos.x+=x;
 }
 
-GLuint Square::get_textID(){
+/*GLuint Square::get_textID(){
     return _textID;
-}
+}*/
+
 void Square::set_textID(GLuint textID){
     _textID = textID;
 }

@@ -108,13 +108,6 @@ void Character::manageEvents(SDL_Event e){
     }
 }
 
-/*bool Character::get_isjumping(){
-    return _injump;
-}
-void Character::set_jump(bool jump){
-    _injump = jump;
-}*/
-
 /*
 bool verif_intersection(Character R1,Square R2){
     float x1min = R1.get_current_pos().x+0.5*R1.width; 
