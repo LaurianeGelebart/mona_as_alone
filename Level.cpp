@@ -95,9 +95,10 @@ void Level::draw()
     tab_square[11].set_pos_y(46.25+12.5*sin(this->alpha));
     tab_square[10].set_pos_x(160+15*sin(this->alpha));
         
-
+    this->current_character->draw_indice();
     this->level_cam.set_position({current_character->get_current_pos().x-30,current_character->get_current_pos().y});
    // this->current_character->draw_character(1);
+    
     
     glPushMatrix();
     glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.2,0);

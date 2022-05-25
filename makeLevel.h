@@ -7,7 +7,8 @@
 
 void makeMenu(Menu* menu); 
 
-void makeLevel(Level** tab_level); 
+
+void makeLevel(Level** tab_level, Character** tab_character); 
 
 
     

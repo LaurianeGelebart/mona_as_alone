@@ -130,6 +130,21 @@ void Character::draw_character()
     glDisable(GL_TEXTURE_2D); 
 }
 
+void Character::draw_indice()
+{
+    glPushMatrix();
+        glColor3f(1, 1, 1);
+    glPopMatrix(); 
+
+    glBegin(GL_TRIANGLES);
+    glVertex2f( this->current_pos.x, this->current_pos.y+2+0.5*this->height);
+    glVertex2f( this->current_pos.x+0.25*5, this->current_pos.y+4+0.5*this->height);
+    glVertex2f( this->current_pos.x-0.25*5, this->current_pos.y+4+0.5*this->height);
+    
+
+    glEnd(); 
+}
+
 void Character::draw_end_pos(){
 
 

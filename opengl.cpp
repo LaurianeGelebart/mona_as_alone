@@ -18,7 +18,7 @@
 #include "gameEnv.h"
 #include "Level.h"
 //#include "Quadtree.h"
-// #include "makeLevel.h"
+#include "makeLevel.h"
 #include "Square.h"
 #include "Platform.h"
 #include "geometry.h"
@@ -83,6 +83,7 @@ int main(int argc, char** argv)
 
     Menu* menu = new Menu();
     Level* tab_level[3] ;
+    //Character** tab_character = new Character*[4];
 
     ////////////////////////////////////////////
     //A mettre dans Make level 
@@ -145,6 +146,7 @@ int main(int argc, char** argv)
     tab_level[2] = level3 ; 
     //////////////////////////////////////////
  
+    //makeLevel(tab_level, tab_character);
 
     Game_Environment environment = Game_Environment(tab_level, menu);
     environment.change_to_level(0); 
