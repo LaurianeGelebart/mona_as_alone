@@ -3,7 +3,7 @@
 #include "makeLevel.h"
 #include "Character.h"
 #include "Platform.h"
-
+/*
 void makeMenu(Menu* menu){}
 
 void makeLevel(Level** tab_level,Character** tab_character ){
@@ -149,4 +149,4 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     tab_level[2] = level3 ;  
     //////////////////////////////////////////
 
-}
+}*/

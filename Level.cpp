@@ -3,13 +3,15 @@
 #include <stdio.h> //DEBUG
 
 #include "Level.h"
+#include "Square.h"
 #include "Character.h"
 #include "geometry.h"
 #include "Platform.h"
 #include "Camera2D.h"
 #include "makeLevel.h"
+#include "gameEnv.h"
 
-Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character)
+Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character, GLuint textID)
 {
     this->tab_square = tab_square;
     this->nb_square = nb_square;
@@ -19,6 +21,13 @@ Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int 
     this->current_character = tab_character[this->selected_character]; 
     this->nb_character_end = 0 ;
     this->alpha = 0.0;
+
+    this->background = Square(260, 120, {130, 53});
+    this->background.set_textID(textID);
+
+    for (int i=0 ; i<this->nb_square ; i++){
+        this->tab_square[i].set_textID(Game_Environment::gentexture("images/platform.png"));
+    }
 }
 
 int Level::get_nb_square()
@@ -93,24 +102,24 @@ void Level::verif_end_pos(){
 
 void Level::draw()
 {
-    if (nb_character == 2){
+    if (this->nb_character == 2){
         tab_square[11].set_pos_y(46.25+12.5*sin(this->alpha));
         tab_square[10].set_pos_x(160+15*sin(this->alpha));  
     }
-    else if (nb_character == 1){
+    else if (this->nb_character == 1){
         tab_square[8].set_pos_y(72.5+10*sin(this->alpha));
     } 
     
     this->level_cam.set_position({current_character->get_current_pos().x-30,current_character->get_current_pos().y});
-   // this->current_character->draw_character(1);
-    
-    
+   
     glPushMatrix();
     glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.2,0);
-    this->current_character->draw_indice();
 
+    this->background.draw_square();
+
+    this->current_character->draw_indice();
     for (int i=0 ; i < this->nb_character; i++){
-        this->tab_character[i]->draw_end_pos();
+        this->tab_character[i]->get_end_zone().draw_square();
         this->tab_character[i]->draw_character(); 
         
     }
@@ -132,22 +141,18 @@ void Level::collisions(Character* chara){
             case 0:
                  chara->set_pos_y(this->tab_square[j].get_current_pos().y + this->tab_square[j].get_height()*0.5+chara->get_height()*0.5)  ;
                  chara->set_speed_y(0);
-                 chara->set_jump(0);  
-                //printf("0");                
+                 chara->set_jump(0);          
             break;
             case 1:
                 chara->set_pos_x(this->tab_square[j].get_current_pos().x + this->tab_square[j].get_width()*0.5+chara->get_width()*0.5)  ;
                 chara->set_speed_x(-chara->get_speed_x());
-                //printf("1"); 
             break;
             case 2:
                 chara->set_pos_y(this->tab_square[j].get_current_pos().y - this->tab_square[j].get_height()*0.5-chara->get_height()*0.5)  ;
-                //printf("2"); 
             break;
             case 3:
                 chara->set_pos_x(this->tab_square[j].get_current_pos().x - (this->tab_square[j].get_width()*0.5 + chara->get_width()*0.5))  ;
                 chara->set_speed_x(-chara->get_speed_x());
-                //printf("%f\n", tab_square[j].get_current_pos().x - 0.5*tab_square[j].get_width()); 
             break;
         }
     } 
@@ -170,7 +175,6 @@ void Level::collisions(Character* chara){
             case 2:
                 chara->set_pos_y(this->tab_character[j]->get_current_pos().y-(*(Square*)this->tab_character[j]).get_height()*0.5-chara->get_height()*0.5)  ;
                 chara->set_speed_y(0);
-                chara->set_jump(0);
             break;
             case 3:
                 chara->set_pos_x(this->tab_character[j]->get_current_pos().x - (*(Square*)this->tab_character[j]).get_width()*0.5-chara->get_width()*0.5)  ;
@@ -203,50 +207,38 @@ int Level::verif_intersection(Character* R1,Square R2){
    for (int i=0 ; i<4 ; i++){
         for (int j=0 ; j<4 ; j++){
             if (opposite_side(tab_R2[j%4],tab_R2[(j+1)%4],tab_R1[i%4],tab_R1[(i+1)%4])  &&  opposite_side(tab_R1[i%4],tab_R1[(i+1)%4],tab_R2[j%4],tab_R2[(j+1)%4])){
-                printf("%d : j\n",j);
                 switch (j){
                     case 0:
-                    printf("%f :0\n",temp);
                     temp = R2.get_current_pos().y+0.5*R2.get_height()+0.5*R1->get_height()-R1->get_current_pos().y;
-                    printf("%f :0\n",temp);
                     if (deplacement>temp){
                         deplacement = temp;
                         indice = j;
                     }
                     break;
                     case 1:
-                    printf("%f :1\n",temp);
                     temp = R2.get_current_pos().x+0.5*R2.get_width()+0.5*R1->get_width()-R1->get_current_pos().x;
-                    printf("%f :1\n",temp);
                     if (deplacement>temp){
                         deplacement = temp;
                         indice = j;
                     }
                     break;
                     case 2:
-                    printf("%f :2\n",temp);
                     temp = R1->get_current_pos().y - (R2.get_current_pos().y-0.5*R2.get_height()-0.5*R1->get_height());
-                    printf("%f :2\n",temp);
                     if (deplacement>temp){
                         deplacement = temp;
                         indice = j;
                     }
                     break;
                     case 3:
-                    printf("%f :3\n",temp);
                     temp = R1->get_current_pos().x - (R2.get_current_pos().x-0.5*R2.get_width()-0.5*R1->get_width());
-                    printf("%f :3\n",temp);
                     if (deplacement>temp){
                         deplacement = temp;
                         indice = j;
                     }
                     break;
 
-
-            }
-                    
-                
-                
+                }
+                        
             }
  
         }   

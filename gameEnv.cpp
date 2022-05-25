@@ -7,12 +7,23 @@
 #include "gameEnv.h"
 #include "constants.h"
 #include "Menu.h"
+#include "Win.h"
 
-Game_Environment::Game_Environment(Level** tab_level, Menu* menu):menu(menu), tab_level(tab_level), current_scene(menu), game_loop(1){}
+Game_Environment::Game_Environment(Level** tab_level, Menu* menu){
+	this->menu = menu ; 
+	this->tab_level =tab_level ;
+	this->win = win ;
+	this->current_scene = menu ;
+	this->game_loop = 1 ;
+	}
 
 Game_Environment::Game_Environment(){}
 
 void Game_Environment::change_to_menu(){
+	this->current_scene = this->menu ; 
+}
+
+void Game_Environment::change_to_win(){
 	this->current_scene = this->menu ; 
 }
 
@@ -25,6 +36,24 @@ Scene * Game_Environment::get_current_scene(){
 	return this->current_scene ; 
 } 
 
+int Game_Environment::is_playing(){
+	return this->game_loop;
+}
+
+int Game_Environment::is_in_menu(){
+	return this->current_scene == this->menu;
+}
+
+int Game_Environment::is_in_win(){
+	return this->current_scene == this->win;
+}
+
+void Game_Environment::is_win(){
+	//printf("\n %d", ((Level*)this->get_current_scene())->get_nb_character_end()); 
+	if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){ 
+		this->change_to_win();
+	}
+}
 GLuint Game_Environment::gentexture(std::string path)
 {
 	
@@ -90,8 +119,13 @@ void Game_Environment::manageEvents(){
 				{
 					this->change_to_level(this->menu->get_selected_level());
 				}
+				//Passage au lorsque l'utilisateur à gagné --> l'utilisateur appuie sur entrée pour valider
+				else if (this->is_in_win() && (e.key.keysym.sym == SDLK_RETURN))
+				{
+					this->change_to_menu();
+				}
 				//Passage au menu --> l'utilisateur appuie sur M ou echap
-				else if(!this->is_in_menu() && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
+				else if(!this->is_in_menu() && !this->is_in_win() && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
 				{
 					this->change_to_menu();
 				} 
@@ -99,7 +133,7 @@ void Game_Environment::manageEvents(){
 				else {
 					 if (this->is_in_menu()){
 						((Menu*)this->get_current_scene())->manageEvents(e);
-					} else {
+					} else if (!this->is_in_win() && !this->is_in_menu()){
 						((Level*)this->get_current_scene())->manageEvents(e);
 					}
 				}
@@ -111,19 +145,6 @@ void Game_Environment::manageEvents(){
 	}	
 }
 
-int Game_Environment::is_playing(){
-	return this->game_loop;
-}
-
-int Game_Environment::is_in_menu(){
-	return this->current_scene == this->menu;
-}
-
-void Game_Environment::is_win(){
-	if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){
-		this->change_to_menu();
-	}
-}
 
 void Game_Environment::onWindowResized(unsigned int width, unsigned int height)
 { 
