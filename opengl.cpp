@@ -17,7 +17,7 @@
 #include "Menu.h"
 #include "gameEnv.h"
 #include "Level.h"
-//#include "Quadtree.h"
+#include "Quadtree.h"
 #include "makeLevel.h"
 #include "Square.h"
 #include "Platform.h"
@@ -83,6 +83,7 @@ int main(int argc, char** argv)
 
     Menu* menu = new Menu();
     Level* tab_level[3] ;
+    //Node* tree = quadtree ( WINDOW_WIDTH, WINDOW_HEIGHT);
     //Character** tab_character = new Character*[4];
 
     ////////////////////////////////////////////
@@ -140,7 +141,7 @@ int main(int argc, char** argv)
     //Création du niveau 1
     Level* level1 = new Level(tab_square3, tab_character, 12, 2);
     Level* level2 = new Level(tab_square3, tab_character, 12, 2);
-    Level* level3 = new Level(tab_square3, tab_character, 12, 2);
+    Level* level3 = new Level(tab_square3, tab_character, 12, 1);
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ;   
     tab_level[2] = level3 ; 
@@ -192,7 +193,7 @@ int main(int argc, char** argv)
         //Calcul du temps ecoule
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
         if (!(environment.is_in_menu())){
-            ((Level*)environment.get_current_scene())->set_alpha(SDL_GetTicks()*0.0005*2*M_PI); 
+            ((Level*)environment.get_current_scene())->set_alpha(SDL_GetTicks()*0.00025*2*M_PI); 
         }        
 
         //Si trop peu de temps s'est ecoule, on met en pause le programme 

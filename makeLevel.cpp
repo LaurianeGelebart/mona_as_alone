@@ -95,7 +95,7 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     Platform square28 = Platform(10, 5, {55, 52.5});
     tab_square2[7]=square28;
 
-    Platform square29 = Platform(20, 5, {130, 72.5}); //*10*sin(alpha)
+    Platform square29 = Platform(20, 5, {130, 72.5});
     tab_square2[8]=square29;
 
     ////////////////////////////////////
@@ -133,10 +133,10 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     Platform square310 = Platform(12.5, 2.5, {136, 51});
     tab_square3[9]=square310;
 
-    Platform square311 = Platform(30, 2.5, {160, 26.25}); //+15*sin(alpha)
+    Platform square311 = Platform(30, 2.5, {160, 26.25}); 
     tab_square3[10]=square311;  
 
-    Platform square312 = Platform(20, 2.5, {190, 46.25}); //+12.5*sin(alpha)
+    Platform square312 = Platform(20, 2.5, {190, 46.25}); 
     tab_square3[11]=square312;  
     ////////////////////////////////////////////
 

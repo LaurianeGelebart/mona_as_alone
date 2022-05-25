@@ -175,6 +175,17 @@ void Character::manageEvents(SDL_Event e){
             this->jump(70);
             this->in_jump = true;
         }
+        //échange la gravité si on appuie sur flèche du bas pas ouf
+        if (e.key.keysym.sym == SDLK_DOWN && !this->in_jump)
+        {
+            if (this->acc.y == -g){
+                this->acc.y = 4*g;
+            }
+            else  if (this->acc.y == 4*g){
+                this->acc.y = -g;
+            }
+            
+        }
     }
 }
 
