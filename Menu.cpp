@@ -16,13 +16,10 @@ Menu::Menu(){
     Square background  = Square(180, 100, {100, 50});
     
     this->arrow_left = left ;
-    this->arrow_left.get_textID();
     this->arrow_left.set_textID(Game_Environment::gentexture("images/arrow_left.png"));
     this->arrow_right = right;
-    this->arrow_right.get_textID();
     this->arrow_right.set_textID(Game_Environment::gentexture("images/arrow_right.png"));
     this->background = background;
-    this->background.get_textID();
     this->background.set_textID(Game_Environment::gentexture("images/background_menu.png"));
 }
 

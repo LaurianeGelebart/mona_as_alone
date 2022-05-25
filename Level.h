@@ -16,6 +16,7 @@ class Level : public Scene
         Character *current_character ; 
         Camera2D level_cam;  
         float alpha ; 
+        Square background ; 
         
 
     public:

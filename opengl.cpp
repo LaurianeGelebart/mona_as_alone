@@ -21,6 +21,7 @@
 #include "Square.h"
 #include "Platform.h"
 #include "geometry.h"
+#include "Win.h"
 
 int main(int argc, char** argv) 
 {
@@ -80,6 +81,7 @@ int main(int argc, char** argv)
         }
     }    
 
+    Win* win = new Win();
     Menu* menu = new Menu();
     Level* tab_level[3] ;
 
@@ -87,10 +89,10 @@ int main(int argc, char** argv)
     //A mettre dans Make level 
     ////////////////////////////////////////////
 
-    Character* chara1 = new Character(11,7,{10,30},{30,5});  
+    Character* chara1 = new Character(11,7,{10,30},{10,20});  
     chara1->set_textID(Game_Environment::gentexture("images/character1.png"));
 
-    Character* chara2 = new Character(5,7,{30,50},{60,5});
+    Character* chara2 = new Character(5,7,{30,50},{30,17});
     chara2->set_textID(Game_Environment::gentexture("images/character2.png"));
 
     Character* tab_character[4] ; 
@@ -135,6 +137,8 @@ int main(int argc, char** argv)
     Platform square312 = Platform(20, 2.5, {190,(float) (46.25+12.5*sin(0.0))});
     tab_square3[11]=square312;
 
+    
+
     //Création du niveau 1
     Level* level1 = new Level(tab_square3, tab_character, 12, 2);
     Level* level2 = new Level(tab_square3, tab_character, 12, 2);
@@ -145,9 +149,8 @@ int main(int argc, char** argv)
     //////////////////////////////////////////
  
 
-    Game_Environment environment = Game_Environment(tab_level, menu);
+    Game_Environment environment = Game_Environment(tab_level, menu, win);
     environment.change_to_level(0); 
-
     environment.onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
     /* ------------------------------ LOOP ------------------------------ */
     while(environment.is_playing()) 
@@ -166,7 +169,9 @@ int main(int argc, char** argv)
         //dessine la scene
         if (environment.is_in_menu()){
             ((Menu*)environment.get_current_scene())->draw();
-        } else {
+        } else if (environment.is_in_win()){
+            ((Win*)environment.get_current_scene())->draw();
+        }else {
             for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
                 ((Level*)environment.get_current_scene())->tab_character[i]->gravity(); 
             } 

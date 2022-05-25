@@ -6,6 +6,7 @@
 #include "geometry.h"
 #include "color.h"
 #include "Character.h"
+#include "gameEnv.h"
     
 
 Character::Character (int height, int width, Position pos, Position final_pos)
@@ -15,12 +16,16 @@ Character::Character (int height, int width, Position pos, Position final_pos)
     this->start_pos = pos;
     this->current_pos = pos;
     this->end_pos = final_pos;
-    this->color = {0.8, 0.1, 0.5} ;
     this->acc = {0, -g};
     this->speed = {0,0};
     this->keystate = SDL_GetKeyboardState(NULL);
     this->has_win = 0 ; 
     this->in_jump = 0 ; 
+
+    this->end_zone  = Square(width, height, final_pos);
+    this->end_zone.set_textID(Game_Environment::gentexture("images/platform.png"));
+
+   
 }
 
 void Character::move(float accx)
@@ -35,6 +40,11 @@ void Character::jump(float accy)
 
 Position Character::get_pos_end(){
     return this->end_pos ; 
+}
+
+Square Character::get_end_zone(){
+
+    return this->end_zone ; 
 }
 
 void Character::set_speed_x(float speed){
@@ -103,7 +113,6 @@ void Character::gravity(){
         this->current_pos = {5, 30}; 
     }
 
-   // printf("\n\n %f \n\n", this->speed.y);
 }
 
 
@@ -128,27 +137,6 @@ void Character::draw_character()
         glEnd(); 
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D); 
-}
-
-void Character::draw_end_pos(){
-
-
-   // glColor3f(0.40, 0.40, 0.40);
-
-    glBegin(GL_QUADS);
-     //glTexCoord2f(0.,0.);
-    glVertex2f( this->end_pos.x-0.5*this->width, this->end_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,0.);
-    glVertex2f( this->end_pos.x+0.5*this->width, this->end_pos.y+0.5*this->height);
-    //glTexCoord2f(1.,1.);
-    glVertex2f( this->end_pos.x+0.5*this->width, this->end_pos.y-0.5*this->height);
-    //glTexCoord2f(0.,1.);
-    glVertex2f( this->end_pos.x-0.5*this->width, this->end_pos.y-0.5*this->height);
-
-
-   // glColor3f(this->color.r, this->color.g, this->color.b);
-
-    glEnd(); 
 }
 
 
