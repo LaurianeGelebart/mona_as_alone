@@ -1,6 +1,9 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <string>
+
 #include "gameEnv.h"
 #include "constants.h"
 #include "Menu.h"
@@ -15,13 +18,37 @@ void Game_Environment::change_to_menu(){
 
 void Game_Environment::change_to_level(int level){
 	this->current_scene = this->tab_level[level] ; 
+	((Level*)this->get_current_scene())->reset_level(); 
 }
+
 Scene * Game_Environment::get_current_scene(){ 
 	return this->current_scene ; 
 } 
 
+GLuint Game_Environment::gentexture(std::string path)
+{
+	
+	SDL_Surface *surface = IMG_Load(path.c_str());
+	if(surface == NULL){
+		printf("Erreur chargement image\n");
+	return EXIT_FAILURE;
+	}
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D,textureID);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(
+        GL_TEXTURE_2D, 0, GL_RGB,
+        surface->w, surface->h, 0,
+        GL_RGB, GL_UNSIGNED_BYTE, surface->pixels
+    );
+    glBindTexture(GL_TEXTURE_2D, 0);
+	return textureID;
+}
+
 void Game_Environment::manageEvents(){
-	 //printf("%p\n", tab_level);
 
 	SDL_Event e;
 	while(SDL_PollEvent(&e)) 
@@ -81,7 +108,7 @@ void Game_Environment::manageEvents(){
 			default:
 			break;
 		}
-	}
+	}	
 }
 
 int Game_Environment::is_playing(){
@@ -90,6 +117,12 @@ int Game_Environment::is_playing(){
 
 int Game_Environment::is_in_menu(){
 	return this->current_scene == this->menu;
+}
+
+void Game_Environment::is_win(){
+	if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){
+		this->change_to_menu();
+	}
 }
 
 void Game_Environment::onWindowResized(unsigned int width, unsigned int height)

@@ -19,7 +19,8 @@ Character::Character (int height, int width, Position pos, Position final_pos)
     this->acc = {0, -g};
     this->speed = {0,0};
     this->keystate = SDL_GetKeyboardState(NULL);
-
+    this->has_win = 0 ; 
+    this->in_jump = 0 ; 
 }
 
 void Character::move(float accx)
@@ -30,6 +31,35 @@ void Character::move(float accx)
 void Character::jump(float accy)
 {
     this->speed.y = accy;
+}
+
+Position Character::get_pos_end(){
+    return this->end_pos ; 
+}
+
+void Character::set_speed_x(float speed){
+    
+    this->speed.x=speed;
+}
+
+void Character::set_speed_y(float speed){
+    this->speed.y=speed;
+}
+
+float Character::get_speed_x(){
+    return this->speed.x;
+}
+
+float Character::get_speed_y(){
+    return this->speed.y;
+}
+
+bool Character::get_has_win(){
+    return this->has_win;
+}
+
+void Character::set_has_win(bool boolean){
+    this->has_win = boolean ; 
 }
 
 void Character::set_position()
@@ -46,18 +76,15 @@ void Character::set_position()
     this->speed.x += (this->acc.x - this->speed.x*4)*delta_t;
 
     this->current_pos.x += this->speed.x*delta_t;
+}
 
+Position Character::get_start_pos(){
+    return this->start_pos;
 }
 
 void Character::gravity(){
     this->speed.y += this->acc.y*delta_t;
     this->current_pos.y += this->speed.y*delta_t;
-
-    if(this->current_pos.y < 5)
-    {
-        this->current_pos.y = 5;
-        this->speed.y = 0;
-    }
    
     if(this->speed.y > 0)
     { 
@@ -70,30 +97,56 @@ void Character::gravity(){
             this->speed.y -= g*delta_t;
         }
     }  
+
+     if(this->current_pos.y < 0 -0.5*this->width)
+    {
+        this->current_pos = {5, 30}; 
+    }
+
+   // printf("\n\n %f \n\n", this->speed.y);
 }
 
 
-void Character::draw_character(int filled)
+void Character::draw_character()
 {
-    if(filled) 
-    {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D,this->_textID);
+
         glBegin(GL_QUADS);
-    }
-    else 
-    {
-        glBegin(GL_LINE_LOOP);
-    }
-    //glTexCoord2f(0.,0.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
+        glTexCoord2f(0.,0.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y+0.5*this->height);
+        glTexCoord2f(1.,0.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
+        glTexCoord2f(1.,1.);
+        glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
+        glTexCoord2f(0.,1.);
+        glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
+    
+    
+    //glColor3f(this->color.r, this->color.g, this->color.b);
+        
+        glEnd(); 
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D); 
+}
+
+void Character::draw_end_pos(){
+
+
+   // glColor3f(0.40, 0.40, 0.40);
+
+    glBegin(GL_QUADS);
+     //glTexCoord2f(0.,0.);
+    glVertex2f( this->end_pos.x-0.5*this->width, this->end_pos.y+0.5*this->height);
     //glTexCoord2f(1.,0.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y+0.5*this->height);
+    glVertex2f( this->end_pos.x+0.5*this->width, this->end_pos.y+0.5*this->height);
     //glTexCoord2f(1.,1.);
-    glVertex2f( this->current_pos.x+0.5*this->width, this->current_pos.y-0.5*this->height);
+    glVertex2f( this->end_pos.x+0.5*this->width, this->end_pos.y-0.5*this->height);
     //glTexCoord2f(0.,1.);
-    glVertex2f( this->current_pos.x-0.5*this->width, this->current_pos.y-0.5*this->height);
-    
-    
-    glColor3f(this->color.r, this->color.g, this->color.b);
+    glVertex2f( this->end_pos.x-0.5*this->width, this->end_pos.y-0.5*this->height);
+
+
+   // glColor3f(this->color.r, this->color.g, this->color.b);
 
     glEnd(); 
 }
@@ -102,29 +155,17 @@ void Character::draw_character(int filled)
 void Character::manageEvents(SDL_Event e){
     if(e.type == SDL_KEYDOWN){
         // printf("touche pressee (code = %d)\n", e.key.keysym.sym);
-        if (e.key.keysym.sym == SDLK_UP)
+        if (e.key.keysym.sym == SDLK_UP && !this->in_jump)
         {
             this->jump(70);
+            this->in_jump = true;
         }
     }
 }
 
-/*
-bool verif_intersection(Character R1,Square R2){
-    float x1min = R1.get_current_pos().x+0.5*R1.width; 
-    float x1max = R1.current_pos.x-0.5*R1.width; 
-    float y1min = R1.current_pos.x-0.5*R1.width; 
-    float y1max = R1.current_pos.x+0.5*R1.width; 
-
-    float x2min = R2.pos_square.x+0.5*R2.width; 
-    float x2max = R2.pos_square.x-0.5*R2.width; 
-    float y2min = R2.pos_square.x-0.5*R2.width; 
-    float y2max = R2.pos_square.x+0.5*R2.width; 
-
-    if y1max  < y2min : return false  // (1)
-    if y1min > y2max  : return false  // (2)
-    if x1min > x2max  : return false  // (3)
-    if x1max  < x2min : return false  // (4)
-    
-    return true  // non empty intersection
-}*/
+bool Character::get_isjumping(){
+    return this->in_jump;
+}
+void Character::set_jump(bool jump){
+    this->in_jump = jump;
+}

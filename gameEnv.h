@@ -1,10 +1,11 @@
 #pragma once
 
+#include <string>
 #include "Level.h"
 #include "Scene.h"
 #include "Menu.h"
 
-class Game_Environment 
+class Game_Environment
 {
     private: 
         Menu* menu ; 
@@ -18,9 +19,11 @@ class Game_Environment
         Scene * get_current_scene();
         void change_to_menu();
         void change_to_level(int level);
+        static GLuint gentexture(std::string path);
         void manageEvents();
         void draw();
         int is_playing();
+        void is_win() ; 
         void onWindowResized(unsigned int width, unsigned int height);
         int is_in_menu();
 };
