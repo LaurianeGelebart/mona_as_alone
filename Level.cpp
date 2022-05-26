@@ -22,7 +22,7 @@ Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int 
     this->nb_character_end = 0 ;
     this->alpha = 0.0;
 
-    this->background = Square(260, 120, {130, 53});
+    this->background = Square(270, 140, {128, 57.5});
     this->background.set_textID(textID);
 
     for (int i=0 ; i<this->nb_square ; i++){

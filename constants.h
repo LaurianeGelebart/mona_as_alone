@@ -10,8 +10,8 @@ const double g = 80.0;
 static const float GL_VIEW_SIZE = 100.;  
 
 /* Dimensions initiales et titre de la fenetre */
-static const unsigned int WINDOW_WIDTH = 800;
-static const unsigned int WINDOW_HEIGHT = 600;
+static const unsigned int WINDOW_WIDTH = 1920;
+static const unsigned int WINDOW_HEIGHT = 1080;
 static const char WINDOW_TITLE[] = "OPENGL";
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
