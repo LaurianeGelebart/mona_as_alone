@@ -101,22 +101,23 @@ void Level::verif_end_pos(){
 
 void Level::draw()
 {
-    if (this->nb_character == 2){
+    if (this->nb_character == 3){
         tab_square[11].set_pos_y(46.25+12.5*sin(this->alpha));
         tab_square[10].set_pos_x(160+15*sin(this->alpha));  
     }
-    else if (this->nb_character == 1){
+    else if (this->nb_character == 2){
         tab_square[8].set_pos_y(72.5+10*sin(this->alpha));
     } 
     
     this->level_cam.set_position({current_character->get_current_pos().x-30,current_character->get_current_pos().y});
    
     glPushMatrix();
-    glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.2,0);
+    glTranslatef(-level_cam.pos.x,-level_cam.pos.y*0.5,0);
 
     this->background.draw_square();
 
     this->current_character->draw_indice();
+    
     for (int i=0 ; i < this->nb_character; i++){
         this->tab_character[i]->get_end_zone().draw_square();
         this->tab_character[i]->draw_character(); 

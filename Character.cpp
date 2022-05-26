@@ -9,14 +9,14 @@
 #include "gameEnv.h"
     
 
-Character::Character (int height, int width, Position pos, Position final_pos)
+Character::Character (int height, int width, int jumpforce, Position pos, Position final_pos)
 {
     this->height = height;
     this->width = width;
     this->start_pos = pos;
     this->current_pos = pos;
     this->end_pos = final_pos;
-    this->acc = {0, -g};
+    this->acc = {0, -g*jumpforce};
     this->speed = {0,0};
     this->keystate = SDL_GetKeyboardState(NULL);
     this->has_win = 0 ; 

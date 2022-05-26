@@ -1,0 +1,77 @@
+[
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Camera2D.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Camera2D.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Camera2D.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Character.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Character.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Character.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Level.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Level.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Level.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Menu.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Menu.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Menu.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Platform.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Platform.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Platform.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Quadtree.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Quadtree.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Quadtree.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Scene.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Scene.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Scene.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Square.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Square.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Square.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/Win.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Win.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/Win.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/gameEnv.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/gameEnv.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/gameEnv.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/geometry.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/geometry.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/geometry.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/makeLevel.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/makeLevel.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/makeLevel.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/opengl.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/opengl.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/opengl.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/opengl/collision.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/opengl/collision.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/opengl/collision.cpp"
+},
+{
+  "directory": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/build",
+  "command": "/usr/bin/g++   -isystem /usr/include/SDL2  -g   -o CMakeFiles/opengl.dir/src/opengl/main.cpp.o -c /home/lou/Documents/C++/ThomasWasAlone/openglproject/src/opengl/main.cpp",
+  "file": "/home/lou/Documents/C++/ThomasWasAlone/openglproject/src/opengl/main.cpp"
+}
+]

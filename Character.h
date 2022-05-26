@@ -16,7 +16,7 @@ class Character : public Square
         Square end_zone ; 
     
     public : 
-        Character(int height, int width, Position pos, Position final_pos); 
+        Character(int height, int width, int jumpforce, Position pos, Position final_pos); 
         void move(float accx);
         void jump(float accy);
         void draw_character();

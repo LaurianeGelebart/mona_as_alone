@@ -11,14 +11,18 @@ void makeLevel(Level** tab_level,Character** tab_character ){
 
     ////////////////////////////////////////////
     
-    Character* chara1 = new Character(11,7,{10,30},{10,20});  
+    Character* chara1 = new Character(11,7,2,{10,30},{10,20});  
     chara1->set_textID(Game_Environment::gentexture("images/character1.png"));
 
-    Character* chara2 = new Character(5,7,{30,50},{30,17});
+    Character* chara2 = new Character(5,7,1,{30,50},{30,17});
     chara2->set_textID(Game_Environment::gentexture("images/character2.png"));
+
+    Character* chara3 = new Character(3,15,3.5,{20,50},{80,80});
+    chara3->set_textID(Game_Environment::gentexture("images/character3.png"));
 
     tab_character[0] = chara1 ; 
     tab_character[1] = chara2 ; 
+    tab_character[2] = chara3 ; 
 
     ////////////////////////////////////
     //NIVEAU1
@@ -78,7 +82,7 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     //Création des niveaux
     Level* level1 = new Level(tab_square1, tab_character, 10, 1, background1);
     Level* level2 = new Level(tab_square2, tab_character, 9, 2, background2);
-    Level* level3 = new Level(tab_square3, tab_character, 12, 2, background3); //bien penser à refaire un nouveau perso
+    Level* level3 = new Level(tab_square3, tab_character, 12, 3, background3); //bien penser à refaire un nouveau perso
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ;
     tab_level[2] = level3 ;  
