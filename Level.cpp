@@ -10,6 +10,7 @@
 #include "Camera2D.h"
 #include "makeLevel.h"
 #include "gameEnv.h"
+#include "Quadtree.h"
 
 Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character, Square background)
 {

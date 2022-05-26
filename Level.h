@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "Scene.h"
 #include "Camera2D.h"
+#include "Quadtree.h"
 
 class Level : public Scene 
 {
@@ -35,6 +36,7 @@ class Level : public Scene
         void draw();
         Character** tab_character ; 
         Square* tab_square ;
+        Node* quadtree;
 
         void collisions(Character* chara); 
         bool opposite_side(Position A,Position B,Position M,Position P);
