@@ -7,13 +7,15 @@
 #include "gameEnv.h"
 #include "constants.h"
 #include "Menu.h"
+#include "Controls.h"
 #include "Win.h"
 
-Game_Environment::Game_Environment(Level** tab_level, Menu* menu){
+Game_Environment::Game_Environment(Level** tab_level, Menu* menu, Win* win, Controls* controls){
 	this->menu = menu ; 
 	this->tab_level =tab_level ;
 	this->win = win ;
 	this->current_scene = menu ;
+	this->controls = controls ;
 	this->game_loop = 1 ;
 	}
 
@@ -24,7 +26,11 @@ void Game_Environment::change_to_menu(){
 }
 
 void Game_Environment::change_to_win(){
-	this->current_scene = this->menu ; 
+	this->current_scene = this->win ; 
+}
+
+void Game_Environment::change_to_controls(){
+	this->current_scene = this->controls ; 
 }
 
 void Game_Environment::change_to_level(int level){
@@ -48,12 +54,17 @@ int Game_Environment::is_in_win(){
 	return this->current_scene == this->win;
 }
 
+int Game_Environment::is_in_controls(){
+	return this->current_scene == this->controls;
+}
+
 void Game_Environment::is_win(){
-	//printf("\n %d", ((Level*)this->get_current_scene())->get_nb_character_end()); 
+	printf("\n %d", ((Level*)this->get_current_scene())->get_nb_character_end()); 
 	if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){ 
 		this->change_to_win();
 	}
 }
+
 GLuint Game_Environment::gentexture(std::string path)
 {
 	
@@ -117,15 +128,20 @@ void Game_Environment::manageEvents(){
 				//Passage à un niveau --> l'utilisateur appuie sur entrée pour valider
 				if (this->is_in_menu() && (e.key.keysym.sym == SDLK_RETURN))
 				{
-					this->change_to_level(this->menu->get_selected_level());
+					int choix = this->menu->get_selected_level(); 
+					if (choix==3){
+						this->change_to_controls();
+					}else {
+						this->change_to_level(choix);
+					}
 				}
-				//Passage au lorsque l'utilisateur à gagné --> l'utilisateur appuie sur entrée pour valider
-				else if (this->is_in_win() && (e.key.keysym.sym == SDLK_RETURN))
+				//Passage au menu lorsque l'utilisateur à gagné ou est dans les controls --> l'utilisateur appuie sur entrée pour valider
+				else if ((this->is_in_win() || this->is_in_controls()) && (e.key.keysym.sym == SDLK_RETURN))
 				{
 					this->change_to_menu();
 				}
 				//Passage au menu --> l'utilisateur appuie sur M ou echap
-				else if(!this->is_in_menu() && !this->is_in_win() && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
+				else if(!this->is_in_menu() && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
 				{
 					this->change_to_menu();
 				} 
@@ -133,7 +149,7 @@ void Game_Environment::manageEvents(){
 				else {
 					 if (this->is_in_menu()){
 						((Menu*)this->get_current_scene())->manageEvents(e);
-					} else if (!this->is_in_win() && !this->is_in_menu()){
+					} else if (!this->is_in_win() && !this->is_in_menu() && !this->is_in_controls()){
 						((Level*)this->get_current_scene())->manageEvents(e);
 					}
 				}

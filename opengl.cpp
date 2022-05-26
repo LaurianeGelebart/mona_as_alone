@@ -23,6 +23,7 @@
 #include "Platform.h"
 #include "geometry.h"
 #include "Win.h"
+#include "Controls.h"
 
 int main(int argc, char** argv) 
 {
@@ -83,6 +84,7 @@ int main(int argc, char** argv)
     }    
 
     Win* win = new Win();
+    Controls* controls = new Controls();
     Menu* menu = new Menu();
     Level* tab_level[3] ;
     //Node* tree = quadtree ( WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -92,16 +94,17 @@ int main(int argc, char** argv)
     //A mettre dans Make level 
     ////////////////////////////////////////////
 
-    Character* chara1 = new Character(11,7,{10,30},{10,20});  
+    Character* chara1 = new Character(11,7,{10,30},{60,20.75});  
     chara1->set_textID(Game_Environment::gentexture("images/character1.png"));
 
-    Character* chara2 = new Character(5,7,{30,50},{30,17});
+    Character* chara2 = new Character(5,7,{30,50},{30,17.75});
     chara2->set_textID(Game_Environment::gentexture("images/character2.png"));
 
     Character* tab_character[4] ; 
     tab_character[0] = chara1 ; 
     tab_character[1] = chara2 ; 
-  ////////////////////////////////////
+
+    ////////////////////////////////////
     //NIVEAU1
     ////////////////////////////////////
     Platform tab_square1[10] ; 
@@ -136,6 +139,11 @@ int main(int argc, char** argv)
     Platform square110 = Platform(15, 4.5, {182.5, 38.25});
     tab_square1[9]=square110;
 
+    Square background1 = Square(270, 140, {128, 57.5});
+    background1.set_textID(Game_Environment::gentexture("images/level1.png"));
+
+
+
     ////////////////////////////////////
     //NIVEAU2
     ////////////////////////////////////
@@ -167,6 +175,10 @@ int main(int argc, char** argv)
 
     Platform square29 = Platform(20, 5, {130, 72.5});
     tab_square2[8]=square29;
+
+    Square background2 = Square(270, 140, {128, 57.5});
+    background2.set_textID(Game_Environment::gentexture("images/level2.png"));
+
 
     ////////////////////////////////////
     //NIVEAU3
@@ -208,12 +220,17 @@ int main(int argc, char** argv)
 
     Platform square312 = Platform(20, 2.5, {190, 46.25}); 
     tab_square3[11]=square312;  
+
+    Square background3 = Square(270, 140, {128, 57.5});
+    background3.set_textID(Game_Environment::gentexture("images/level3.png"));
+
+
     ////////////////////////////////////////////
 
     //Création des niveaux
-    Level* level1 = new Level(tab_square1, tab_character, 10, 1, Game_Environment::gentexture("images/level1.png"));
-    Level* level2 = new Level(tab_square2, tab_character, 9, 2, Game_Environment::gentexture("images/level2.png"));
-    Level* level3 = new Level(tab_square3, tab_character, 12, 2, Game_Environment::gentexture("images/level3.png")); //bien penser à refaire un nouveau perso
+    Level* level1 = new Level(tab_square1, tab_character, 10, 1, background1);
+    Level* level2 = new Level(tab_square2, tab_character, 9, 2, background2);
+    Level* level3 = new Level(tab_square3, tab_character, 12, 2, background3); //bien penser à refaire un nouveau perso
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ;
     tab_level[2] = level3 ;  
@@ -221,8 +238,7 @@ int main(int argc, char** argv)
  
     //makeLevel(tab_level, tab_character);
 
-    Game_Environment environment = Game_Environment(tab_level, menu);
-    environment.change_to_level(0); 
+    Game_Environment environment = Game_Environment(tab_level, menu, win, controls);
     environment.onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
     /* ------------------------------ LOOP ------------------------------ */
     while(environment.is_playing()) 
@@ -241,9 +257,14 @@ int main(int argc, char** argv)
         //dessine la scene
         if (environment.is_in_menu()){
             ((Menu*)environment.get_current_scene())->draw();
-        } else if (environment.is_in_win()){
+        } 
+        else if (environment.is_in_win()){
             ((Win*)environment.get_current_scene())->draw();
-        }else {
+        }
+        else if (environment.is_in_controls()){
+            ((Controls*)environment.get_current_scene())->draw();
+        }
+        else {
             for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
                 ((Level*)environment.get_current_scene())->tab_character[i]->gravity(); 
             } 
@@ -265,7 +286,7 @@ int main(int argc, char** argv)
 
         //Calcul du temps ecoule
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
-        if (!(environment.is_in_menu())){
+        if (!(environment.is_in_menu()) && !(environment.is_in_win()) && !(environment.is_in_controls())){
             ((Level*)environment.get_current_scene())->set_alpha(SDL_GetTicks()*0.00025*2*M_PI); 
         }        
 

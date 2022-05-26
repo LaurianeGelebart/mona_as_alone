@@ -42,14 +42,14 @@ void Menu::manageEvents(SDL_Event e){
         if (e.key.keysym.sym == SDLK_UP)
         {
             this->selected_level -= 1;
-            this->selected_level += this->nb_levels*(this->selected_level<0);
+            this->selected_level += (this->nb_levels+1)*(this->selected_level<0);
             this->arrow_left.set_pos_y(52.5-selected_level*10.5); 
             this->arrow_right.set_pos_y(52.5-selected_level*10.5);
            // printf("%d------------------\n", this->selected_level); //DEBUG
         }
         if (e.key.keysym.sym == SDLK_DOWN)
         {
-            this->selected_level = (this->selected_level+1)%this->nb_levels;
+            this->selected_level = (this->selected_level+1)%(this->nb_levels+1);
             this->arrow_left.set_pos_y(52.5-selected_level*10.5); 
             this->arrow_right.set_pos_y(52.5-selected_level*10.5);
         }

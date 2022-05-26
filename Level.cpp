@@ -11,7 +11,7 @@
 #include "makeLevel.h"
 #include "gameEnv.h"
 
-Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character, GLuint textID)
+Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character, Square background)
 {
     this->tab_square = tab_square;
     this->nb_square = nb_square;
@@ -22,11 +22,10 @@ Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int 
     this->nb_character_end = 0 ;
     this->alpha = 0.0;
 
-    this->background = Square(270, 140, {128, 57.5});
-    this->background.set_textID(textID);
+    this->background = background ; 
 
     for (int i=0 ; i<this->nb_square ; i++){
-        this->tab_square[i].set_textID(Game_Environment::gentexture("images/platform.png"));
+        this->tab_square[i].set_textID(Game_Environment::gentexture("images/plateforme.png"));
     }
 }
 
