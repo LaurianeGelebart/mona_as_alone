@@ -3,11 +3,9 @@
 
 #include <vector>
 #include "Character.h"
-#include "Level.h"
 #include "Platform.h"
 #include "Scene.h"
 #include "Camera2D.h"
-
 
 struct SquareCorner {
     float x1;
@@ -18,10 +16,11 @@ struct SquareCorner {
 
 struct Node{
     SquareCorner square;
+    std::vector<Square> _objects;
     Node *topleft=nullptr;
     Node *botleft=nullptr;
     Node *topright=nullptr;
-    Node *botright=nullptr;
+    Node *botright=nullptr;  
 };
 
 struct Leaf{
@@ -33,14 +32,13 @@ class Quadtree
     private:
     Node node;
     Character* chara;
-
+    
     public:
     Node* quadtree(float width, float height);
     void addNode(Node* node, float x1, float x2, float y1, float y2);
-    bool is_leaf(SquareCorner square);
+    bool is_leaf();
     bool is_inside();
-    int nb_object_inside(std::vector<Square> vector);
-    std::vector<Square> object_inside(Level* level);
+    void object_inside(int nb_square, Square* tab_square);
     bool test_corner(Position pos);
 };
 

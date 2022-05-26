@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <vector>
 #include "Character.h"
 #include "Platform.h"
 #include "Scene.h"

@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Platform.h"
 #include "gameEnv.h"
+#include "Quadtree.h"
 
 void makeMenu(Menu* menu){}
 
@@ -37,6 +38,7 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     tab_square1[9]=Platform(15, 4.5, {182.5, 38.25});
     Square background1 = Square(270, 140, {128, 57.5});
     background1.set_textID(Game_Environment::gentexture("images/level1.png"));
+    Node* quadtree1;
 
     ////////////////////////////////////
     //NIVEAU2
@@ -54,6 +56,7 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     tab_square2[8]=Platform(20, 5, {130, 72.5});
     Square background2 = Square(270, 140, {128, 57.5});
     background2.set_textID(Game_Environment::gentexture("images/level2.png"));
+    Node* quadtree2;
 
     ////////////////////////////////////
     //NIVEAU3
@@ -74,6 +77,8 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     tab_square3[11]= Platform(20, 2.5, {190, 46.25});
     Square background3 = Square(270, 140, {128, 57.5});
     background3.set_textID(Game_Environment::gentexture("images/level3.png"));
+    Node* quadtree3;
+
 
     //Création des niveaux
     Level* level1 = new Level(tab_square1, tab_character, 10, 1, background1);
@@ -81,6 +86,9 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     Level* level3 = new Level(tab_square3, tab_character, 12, 2, background3); //bien penser à refaire un nouveau perso
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ;
-    tab_level[2] = level3 ;  
+    tab_level[2] = level3 ; 
+    level1->quadtree = quadtree1; 
+    level2->quadtree = quadtree2; 
+    level3->quadtree = quadtree3;
     //////////////////////////////////////////
 }
