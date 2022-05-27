@@ -103,11 +103,20 @@ void Level::draw()
 {
     if (this->nb_character == 3){
         tab_square[11].set_pos_y(46.25+12.5*sin(this->alpha));
-        tab_square[10].set_pos_x(160+15*sin(this->alpha));  
+        tab_square[10].set_pos_x(160+15*sin(this->alpha)); 
+        tab_character[0]->set_end_zone({90,70.5});
+        tab_character[1]->set_end_zone({170,67.5});
+        
     }
     else if (this->nb_character == 2){
         tab_square[8].set_pos_y(72+15*sin(this->alpha));
+        tab_character[0]->set_end_zone({8,85.5});
+        tab_character[1]->set_end_zone({70,72});
     } 
+    else if (this->nb_character == 1){
+        tab_character[0]->set_end_zone({158,77.5});
+    }
+
     
     this->level_cam.set_position({current_character->get_current_pos().x-30,current_character->get_current_pos().y-25});
    

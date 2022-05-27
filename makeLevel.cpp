@@ -11,19 +11,18 @@ void makeLevel(Level** tab_level,Character** tab_character ){
 
     ////////////////////////////////////////////
     
-    Character* chara1 = new Character(11,7,1.0,{10,30},{10,20});  
+    Character* chara1 = new Character(11,7,1.0,{10,30},{158,77.5});  
     chara1->set_textID(Game_Environment::gentexture("images/character1.png"));
 
-    Character* chara2 = new Character(5,7,1.7,{30,50},{30,17});
+    Character* chara2 = new Character(5,7,1.7,{30,50},{70,72});
     chara2->set_textID(Game_Environment::gentexture("images/character2.png"));
 
-    Character* chara3 = new Character(3,15,3.0,{20,50},{80,80});
+    Character* chara3 = new Character(3,15,3.0,{20,50},{11,76.5});
     chara3->set_textID(Game_Environment::gentexture("images/character3.png"));
 
     tab_character[0] = chara1 ; 
     tab_character[1] = chara2 ; 
     tab_character[2] = chara3 ; 
-    
 
     ////////////////////////////////////
     //NIVEAU1
@@ -45,7 +44,7 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     tab_square1[12]=Platform(15, 4.5, {182.5, 45});
     tab_square1[13]=Platform(28, 4.5, {212, 60});
     tab_square1[14]=Platform(2, 112.5, {1, 58});
-    tab_square1[15]=Platform(22, 112.5, {228, 58});
+    tab_square1[15]=Platform(22, 170, {228, 58});
     Square background1 = Square(270, 140, {128, 56});
     background1.set_textID(Game_Environment::gentexture("images/level1.png"));
 
@@ -63,7 +62,7 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     tab_square2[6]=Platform(40, 10, {20, 75});
     tab_square2[7]=Platform(10, 5, {55, 39.5});
     tab_square2[8]=Platform(20, 5, {125, 72}); //plateforme
-    tab_square2[9]=Platform(5, 125, {1, 60});
+    tab_square2[9]=Platform(5, 125, {1, 65});
     
    
     Square background2 = Square(270, 140, {128, 65});

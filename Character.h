@@ -38,6 +38,7 @@ class Character : public Square
         void switch_gravity();
         bool is_switch_gravity();
         Square get_end_zone();
+        void set_end_zone(Position pos);
         bool in_jump;
         Vect speed;
         Vect acc;

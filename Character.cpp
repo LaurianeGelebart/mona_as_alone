@@ -23,7 +23,7 @@ Character::Character (int height, int width, float jumpforce, Position pos, Posi
     this->has_win = 0 ; 
     this->in_jump = 0 ; 
 
-    this->end_zone  = Square(width, height, final_pos);
+    this->end_zone  = Square(width+2, height+2, final_pos);
     this->end_zone.set_textID(Game_Environment::gentexture("images/platform.png"));
 
 }
@@ -45,6 +45,11 @@ Position Character::get_pos_end(){
 Square Character::get_end_zone(){
 
     return this->end_zone ; 
+}
+
+void Character::set_end_zone(Position pos){
+
+    this->end_zone=Square(this->width+2, this->height+2, pos); 
 }
 
 void Character::set_speed_x(float speed){
