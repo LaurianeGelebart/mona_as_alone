@@ -106,7 +106,7 @@ void Level::draw()
         tab_square[10].set_pos_x(160+15*sin(this->alpha));  
     }
     else if (this->nb_character == 2){
-        tab_square[8].set_pos_y(72.5+10*sin(this->alpha));
+        tab_square[8].set_pos_y(72+15*sin(this->alpha));
     } 
     
     this->level_cam.set_position({current_character->get_current_pos().x-30,current_character->get_current_pos().y});
