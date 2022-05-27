@@ -9,11 +9,11 @@ Menu::Menu(){
     this->selected_level = 0 ; 
     this->nb_levels = 3 ;
     
-    Square left = Square(4, 5, {108, 52.5});
+    Square left = Square(4, 5, {105.5, 55.5});
 
-    Square right = Square(4, 5, {155, 52.5});
+    Square right = Square(4, 5, {150, 55.5});
 
-    Square background  = Square(205, 105, {100, 50});
+    Square background  = Square(205, 105, {95, 50});
     
     this->arrow_left = left ;
     this->arrow_left.set_textID(Game_Environment::gentexture("images/arrow_left.png"));
@@ -43,15 +43,15 @@ void Menu::manageEvents(SDL_Event e){
         {
             this->selected_level -= 1;
             this->selected_level += (this->nb_levels+1)*(this->selected_level<0);
-            this->arrow_left.set_pos_y(52.5-selected_level*10.5); 
-            this->arrow_right.set_pos_y(52.5-selected_level*10.5);
+            this->arrow_left.set_pos_y(55.5-selected_level*11.25); 
+            this->arrow_right.set_pos_y(55.5-selected_level*11.25);
            // printf("%d------------------\n", this->selected_level); //DEBUG
         }
         if (e.key.keysym.sym == SDLK_DOWN)
         {
             this->selected_level = (this->selected_level+1)%(this->nb_levels+1);
-            this->arrow_left.set_pos_y(52.5-selected_level*10.5); 
-            this->arrow_right.set_pos_y(52.5-selected_level*10.5);
+            this->arrow_left.set_pos_y(55.5-selected_level*11.25); 
+            this->arrow_right.set_pos_y(55.5-selected_level*11.25);
         }
         if (e.key.keysym.sym == SDLK_h)
         {
