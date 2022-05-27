@@ -54,8 +54,8 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     ////////////////////////////////////
     Platform* tab_square2 = new Platform[10]; 
 
-    tab_square2[0]=Platform(150, 20, {75, 10});
-    tab_square2[1]=Platform(10, 6, {115, 22.5});
+    tab_square2[0]=Platform(150, 25, {75, 12.5});
+    tab_square2[1]=Platform(10, 5, {37, 54});
     tab_square2[2]=Platform(10, 25, {135, 27});
     tab_square2[3]=Platform(10, 35, {145, 32.5});
     tab_square2[4]=Platform(70, 5, {80, 87});
