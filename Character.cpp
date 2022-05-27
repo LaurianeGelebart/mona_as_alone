@@ -170,7 +170,7 @@ void Character::manageEvents(SDL_Event e){
         }
        
         //échange la gravité du premier personnage si on appuie sur g
-        if (e.key.keysym.sym == SDLK_g && !this->in_jump)
+        if (e.key.keysym.sym == SDLK_g)
         {
             if (this->jumpforce==1){
                  switch_gravity();
