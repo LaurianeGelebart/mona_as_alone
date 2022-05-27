@@ -39,6 +39,7 @@ class Level : public Scene
         Square* tab_square ;
         Node* quadtree;
 
+        /*void check_inside_zone(int nb_square, Square* tab_square, Node* quadtree);*/
         void collisions(Character* chara); 
         bool opposite_side(Position A,Position B,Position M,Position P);
         

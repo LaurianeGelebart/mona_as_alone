@@ -16,30 +16,27 @@ struct SquareCorner {
 
 struct Node{
     SquareCorner square;
-    std::vector<Square> _objects;
+    Square _objects[30];
     Node *topleft=nullptr;
     Node *botleft=nullptr;
     Node *topright=nullptr;
-    Node *botright=nullptr;  
-};
-
-struct Leaf{
-    std::vector<Square> _squares;
+    Node *botright=nullptr;
+    int nb_object; 
 };
 
 class Quadtree
-{
-    private:
-    Node node;
-    Character* chara;
-    
+{    
     public:
-    Node* quadtree(float width, float height);
-    void addNode(Node* node, float x1, float x2, float y1, float y2);
-    bool is_leaf();
-    bool is_inside();
-    void object_inside(int nb_square, Square* tab_square);
-    bool test_corner(Position pos);
+    Node* init_quadtree(float width, float height, Square* tab_square, int nb_square);
+    void addNode(Node* quadtree);
+    bool is_leaf(Node* node);
+    Node* is_inside();
+    void object_inside(Node* child, Square object_parent[30], int nb_object_parent);
+    bool test_corner(Position pos, Node* child);
+    Node* test_corner_recursive(Position pos, Node* node);
+    void make_quadtree(Node* quadtree);
+    //bool compare_leaf(Node* first, Node* second);
+    //void get_four_leaves(Position pos, Node* node);
 };
 
 #endif

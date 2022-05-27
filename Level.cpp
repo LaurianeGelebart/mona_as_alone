@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 
 #include <stdio.h> //DEBUG
-
+#include <vector>
 #include "Level.h"
 #include "Square.h"
 #include "Character.h"
@@ -130,10 +130,19 @@ void Level::draw()
     
 }
 
+/*void Level::check_inside_zone(int nb_square, Square* tab_square, Node* quadtree){
+
+    if(Quadtree::is_leaf() && Quadtree::is_inside()){
+        
+    }
+}*/
+
 void Level::collisions(Character* chara){
 
+    //Node node = Quadtree::test_corner_recursive(chara->get_current_pos(),this->quadtree);
+    
     //collisions character/platform
-    for (int j=0 ; j< this->nb_square ; j++) {   
+    for (int j=0 ; j< 4 ; j++) {   
         switch (this->verif_intersection(chara,tab_square[j])) {
             case 4 : 
                 //pas de collision
