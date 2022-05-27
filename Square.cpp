@@ -37,6 +37,26 @@ void Square::draw_square()
     
 }
 
+void Square::draw_endzone() 
+{
+    glBegin(GL_LINE_LOOP);
+        float tab_pos[4]; 
+
+        tab_pos[0] = this->current_pos.x-0.5*this->width ; 
+        tab_pos[1] = this->current_pos.x+0.5*this->width ; 
+
+        tab_pos[2] = this->current_pos.y-0.5*this->height ; 
+        tab_pos[3] = this->current_pos.y+0.5*this->height ; 
+        glPushMatrix();
+           // glColor3f(0, 0, 0.5);
+            glVertex2f(tab_pos[0],tab_pos[3]);
+            glVertex2f(tab_pos[1],tab_pos[3]);
+            glVertex2f(tab_pos[1],tab_pos[2]);
+            glVertex2f(tab_pos[0],tab_pos[2]);
+        glPopMatrix();
+    glEnd();
+}
+
 Square::Square(){}
 
 Square::Square(int width, int height, Position current_pos){

@@ -27,6 +27,23 @@ Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int 
     for (int i=0 ; i<this->nb_square ; i++){
         this->tab_square[i].set_textID(Game_Environment::gentexture("images/plateforme.png"));
     }
+
+    /*if (this->nb_character == 3){
+        tab_character[0]->get_end_zone().set_textID(Game_Environment::gentexture("images/platform.png"));
+        tab_character[1]->get_end_zone().set_textID(Game_Environment::gentexture("images/platform.png"));
+        tab_character[2]->get_end_zone().set_textID(Game_Environment::gentexture("images/platform.png"));
+    
+    }
+    else if (this->nb_character == 2){
+        tab_character[0]->get_end_zone().set_textID(Game_Environment::gentexture("images/platform.png"));
+        tab_character[1]->get_end_zone().set_textID(Game_Environment::gentexture("images/platform.png"));
+
+    } 
+    else if (this->nb_character == 1){
+        tab_character[0]->get_end_zone().set_textID(Game_Environment::gentexture("images/platform.png"));
+    
+    }*/
+    
 }
 
 int Level::get_nb_square()
@@ -110,7 +127,7 @@ void Level::draw()
     }
     else if (this->nb_character == 2){
         tab_square[8].set_pos_y(72+15*sin(this->alpha));
-        tab_character[0]->set_end_zone({8,85.5});
+       tab_character[0]->set_end_zone({8,85.5});
         tab_character[1]->set_end_zone({70,72});
     } 
     else if (this->nb_character == 1){
@@ -128,7 +145,7 @@ void Level::draw()
     this->current_character->draw_indice();
     
     for (int i=0 ; i < this->nb_character; i++){
-        this->tab_character[i]->get_end_zone().draw_square();
+        this->tab_character[i]->get_end_zone().draw_endzone();
         this->tab_character[i]->draw_character(); 
         
     }
