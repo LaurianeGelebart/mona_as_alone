@@ -9,7 +9,7 @@
 #include "gameEnv.h"
     
 
-Character::Character (int height, int width, int jumpforce, Position pos, Position final_pos)
+Character::Character (int height, int width, float jumpforce, Position pos, Position final_pos)
 {
     this->height = height;
     this->width = width;
