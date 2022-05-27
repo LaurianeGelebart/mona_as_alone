@@ -13,6 +13,7 @@ Character::Character (int height, int width, float jumpforce, Position pos, Posi
 {
     this->height = height;
     this->width = width;
+    this->jumpforce = jumpforce;
     this->start_pos = pos;
     this->current_pos = pos;
     this->end_pos = final_pos;
@@ -107,7 +108,7 @@ void Character::gravity(){
         }
     }  
 
-     if(this->current_pos.y < 0 -0.5*this->width)
+     if(this->current_pos.y < -50 -0.5*this->width || this->current_pos.y > 120 + 0.5*this->width)
     {
         this->current_pos = {5, 30}; 
     }
@@ -158,21 +159,24 @@ void Character::manageEvents(SDL_Event e){
     if(e.type == SDL_KEYDOWN){
         // printf("touche pressee (code = %d)\n", e.key.keysym.sym);
         if (e.key.keysym.sym == SDLK_UP && !this->in_jump)
-        {
-            this->jump(70);
+        {   
+           if (this->jumpforce==1 && is_switch_gravity()){
+                this->jump(-70);
+            }
+            else {
+                this->jump(70);
+            }
             this->in_jump = true;
-        }/*
-        //échange la gravité si on appuie sur flèche du bas pas ouf
-        if (e.key.keysym.sym == SDLK_DOWN && !this->in_jump)
+        }
+       
+        //échange la gravité du premier personnage si on appuie sur g
+        if (e.key.keysym.sym == SDLK_g && !this->in_jump)
         {
-            if (this->acc.y == -g){
-                this->acc.y = 4*g;
+            if (this->jumpforce==1){
+                 switch_gravity();
             }
-            else  if (this->acc.y == 4*g){
-                this->acc.y = -g;
-            }
-            
-        }*/
+
+        }
     }
 }
 
@@ -181,4 +185,25 @@ bool Character::get_isjumping(){
 }
 void Character::set_jump(bool jump){
     this->in_jump = jump;
+}
+
+void Character::switch_gravity(){
+    if (this->acc.y == -g){
+        this->acc.y = 1.5*g;
+    }
+    else  if (this->acc.y == 1.5*g){
+        this->acc.y = -g;
+    }
+}
+
+bool Character::is_switch_gravity(){
+    if (this->acc.y == -g){
+        return false;
+    }
+    else  if (this->acc.y == 1.5*g){
+        return true;
+    }
+    else {
+        return true;
+    }
 }

@@ -35,10 +35,13 @@ class Character : public Square
         float get_speed_y();
         bool get_has_win();
         bool get_isjumping();
+        void switch_gravity();
+        bool is_switch_gravity();
         Square get_end_zone();
         bool in_jump ;
         Vect speed;
         Vect acc;
+        float jumpforce;
         
 };
 
