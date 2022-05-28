@@ -116,7 +116,7 @@ void Level::draw()
 
     this->background.draw_square();
 
-    this->current_character->draw_indice();
+    this->current_character->draw_indice(this->alpha);
     
     for (int i=0 ; i < this->nb_character; i++){
         this->tab_character[i]->get_end_zone().draw_square();

@@ -20,7 +20,7 @@ class Character : public Square
         void move(float accx);
         void jump(float accy);
         void draw_character();
-        void draw_indice();
+        void draw_indice(float alpha);
         void gravity();
         void manageEvents(SDL_Event e);
         bool verif_intersection(Square R1,Square R2);  
