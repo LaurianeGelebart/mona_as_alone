@@ -105,13 +105,16 @@ void Level::manageEvents(SDL_Event e)
 }
 
 void Level::verif_end_pos(){
-    int c_posX = current_character->get_current_pos().x ; 
-    int c_posY = current_character->get_current_pos().y ; 
-    int e_posX = current_character->get_pos_end().x ; 
-    int e_posY = current_character->get_pos_end().y ; 
+    printf("\nverif -- %d\n",  this->current_character->get_has_win() ); 
+    printf("\nend_pos -- %f - %f\n",  this->current_character->get_pos_end().x, this->current_character->get_pos_end().y ); 
+    printf("\npos -- %f - %f\n",  this->current_character->get_current_pos().x, this->current_character->get_current_pos().y ); 
+    int c_posX = this->current_character->get_current_pos().x ; 
+    int c_posY = this->current_character->get_current_pos().y ; 
+    int e_posX = this->current_character->get_pos_end().x ; 
+    int e_posY = this->current_character->get_pos_end().y ; 
 
     if( (c_posX == e_posX && c_posY == e_posY) && !(current_character->get_has_win())){
-        current_character->set_has_win(1); 
+        this->current_character->set_has_win(1); 
         this->nb_character_end += 1 ;
     }
 }
@@ -120,19 +123,11 @@ void Level::draw()
 {
     if (this->nb_character == 3){
         tab_square[11].set_pos_y(46.25+12.5*sin(this->alpha));
-        tab_square[10].set_pos_x(160+15*sin(this->alpha)); 
-        tab_character[0]->set_end_zone({90,70.5});
-        tab_character[1]->set_end_zone({170,67.5});
-        
+        tab_square[10].set_pos_x(160+15*sin(this->alpha));        
     }
     else if (this->nb_character == 2){
         tab_square[8].set_pos_y(72+15*sin(this->alpha));
-       tab_character[0]->set_end_zone({8,85.5});
-        tab_character[1]->set_end_zone({70,72});
     } 
-    else if (this->nb_character == 1){
-        tab_character[0]->set_end_zone({158,77.5});
-    }
 
     
     this->level_cam.set_position({current_character->get_current_pos().x-30,current_character->get_current_pos().y-25});
@@ -142,7 +137,7 @@ void Level::draw()
 
     this->background.draw_square();
 
-    this->current_character->draw_indice();
+    this->current_character->draw_indice(this->alpha);
     
     for (int i=0 ; i < this->nb_character; i++){
         this->tab_character[i]->get_end_zone().draw_endzone();

@@ -132,6 +132,7 @@ void Game_Environment::manageEvents(){
 					if (choix==3){
 						this->change_to_controls();
 					}else {
+						printf("change level"); 
 						this->change_to_level(choix);
 					}
 				}

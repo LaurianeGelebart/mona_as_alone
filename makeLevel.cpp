@@ -7,22 +7,14 @@
 
 void makeMenu(Menu* menu){}
 
-void makeLevel(Level** tab_level,Character** tab_character ){
+void makeLevel(Level** tab_level,Character** tab_character1, Character** tab_character2, Character** tab_character3 ){
 
     ////////////////////////////////////////////
     
     Character* chara1 = new Character(11,7,1.0,{10,30},{158,77.5});  
     chara1->set_textID(Game_Environment::gentexture("images/character1.png"));
 
-    Character* chara2 = new Character(5,7,1.7,{30,50},{70,72});
-    chara2->set_textID(Game_Environment::gentexture("images/character2.png"));
-
-    Character* chara3 = new Character(3,15,3.0,{20,50},{11,76.5});
-    chara3->set_textID(Game_Environment::gentexture("images/character3.png"));
-
-    tab_character[0] = chara1 ; 
-    tab_character[1] = chara2 ; 
-    tab_character[2] = chara3 ; 
+    tab_character1[0] = chara1 ; 
 
     ////////////////////////////////////
     //NIVEAU1
@@ -51,6 +43,16 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     ////////////////////////////////////
     //NIVEAU2
     ////////////////////////////////////
+      
+    Character* chara2 = new Character(11,7,1.0,{10,30},{8,85.5});  
+    chara2->set_textID(Game_Environment::gentexture("images/character1.png"));
+
+    Character* chara3 = new Character(5,7,1.7,{30,50},{70,72});
+    chara3->set_textID(Game_Environment::gentexture("images/character2.png"));
+
+    tab_character2[0] = chara2 ; 
+    tab_character2[1] = chara3 ; 
+
     Platform* tab_square2 = new Platform[10]; 
 
     tab_square2[0]=Platform(150, 25, {75, 12.5});
@@ -71,6 +73,20 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     ////////////////////////////////////
     //NIVEAU3
     ////////////////////////////////////
+      
+    Character* chara4 = new Character(11,7,1.0,{10,30},{90,70.5});  
+    chara4->set_textID(Game_Environment::gentexture("images/character1.png"));
+
+    Character* chara5 = new Character(5,7,1.7,{30,50},{170,67.5});
+    chara5->set_textID(Game_Environment::gentexture("images/character2.png"));
+
+    Character* chara6 = new Character(3,15,3.0,{20,50},{11,76.5});
+    chara6->set_textID(Game_Environment::gentexture("images/character3.png"));
+
+    tab_character3[0] = chara4 ; 
+    tab_character3[1] = chara5 ; 
+    tab_character3[2] = chara6 ; 
+
     Platform* tab_square3 = new Platform[13]; 
 
     tab_square3[0]= Platform(40, 15, {20, 7.5});
@@ -91,9 +107,9 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     background3.set_textID(Game_Environment::gentexture("images/level3.png"));
 
     //Création des niveaux
-    Level* level1 = new Level(tab_square1, tab_character, 16, 1, background1);
-    Level* level2 = new Level(tab_square2, tab_character, 10, 2, background2);
-    Level* level3 = new Level(tab_square3, tab_character, 13, 3, background3); //bien penser à refaire un nouveau perso
+    Level* level1 = new Level(tab_square1, tab_character1, 16, 1, background1);
+    Level* level2 = new Level(tab_square2, tab_character2, 10, 2, background2);
+    Level* level3 = new Level(tab_square3, tab_character3, 13, 3, background3); //bien penser à refaire un nouveau perso
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ;
     tab_level[2] = level3 ;  

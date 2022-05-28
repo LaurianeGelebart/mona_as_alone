@@ -145,20 +145,25 @@ void Character::draw_character()
     glDisable(GL_TEXTURE_2D); 
 }
 
-void Character::draw_indice()
+
+void Character::draw_indice(float alpha)
 {
+    glPushMatrix();
+        glColor3f(0.8, 0, 0.5);
+    glPopMatrix(); 
+
+    glBegin(GL_TRIANGLES);
+    glVertex2f( this->current_pos.x, this->current_pos.y+2+0.5*this->height+sin(alpha*3)/2);
+    glVertex2f( this->current_pos.x+0.25*5, this->current_pos.y+4+0.5*this->height+sin(alpha*3)/2);
+    glVertex2f( this->current_pos.x-0.25*5, this->current_pos.y+4+0.5*this->height+sin(alpha*3)/2);
+    
     glPushMatrix();
         glColor3f(1, 1, 1);
     glPopMatrix(); 
 
-    glBegin(GL_TRIANGLES);
-    glVertex2f( this->current_pos.x, this->current_pos.y+2+0.5*this->height);
-    glVertex2f( this->current_pos.x+0.25*5, this->current_pos.y+4+0.5*this->height);
-    glVertex2f( this->current_pos.x-0.25*5, this->current_pos.y+4+0.5*this->height);
-    
-
     glEnd(); 
 }
+
 
 
 void Character::manageEvents(SDL_Event e){

@@ -87,10 +87,12 @@ int main(int argc, char** argv)
     Controls* controls = new Controls();
     Menu* menu = new Menu();
     Level* tab_level[3] ;
-    Character** tab_character = new Character*[4];
+    Character** tab_character1 = new Character*[1];
+    Character** tab_character2 = new Character*[2];
+    Character** tab_character3 = new Character*[3];
     
     //Création des niveaux
-    makeLevel(tab_level, tab_character);
+    makeLevel(tab_level, tab_character1, tab_character2, tab_character3);
 
     Game_Environment environment = Game_Environment(tab_level, menu, win, controls);
     environment.onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -124,10 +126,10 @@ int main(int argc, char** argv)
             } 
             ((Level*)environment.get_current_scene())->get_current_character()->set_position(); 
             for (int i=0 ; i<((Level*)environment.get_current_scene())->get_nb_character() ; i++) {
-                    ((Level*)environment.get_current_scene())->collisions(tab_character[i]);
+                    ((Level*)environment.get_current_scene())->collisions(((Level*)environment.get_current_scene())->tab_character[i]);
                     for (int j=0; j<((Level*)environment.get_current_scene())->get_nb_character() ; j++) {
                         if (j!=i){
-                            ((Level*)environment.get_current_scene())->collisions(tab_character[i]);
+                            ((Level*)environment.get_current_scene())->collisions(((Level*)environment.get_current_scene())->tab_character[i]);
                         }
                     }
             }  
