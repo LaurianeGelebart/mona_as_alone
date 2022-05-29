@@ -1,6 +1,6 @@
 # openglproject
 
-Compile with make opengl
+Compile with make opengl<br/>
 Execute ./opengl
 
 # Need to be revised
