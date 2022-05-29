@@ -87,29 +87,29 @@ void makeLevel(Level** tab_level,Character** tab_character1, Character** tab_cha
     tab_character3[1] = chara5 ; 
     tab_character3[2] = chara6 ; 
 
-    Platform* tab_square3 = new Platform[13]; 
+    Platform* tab_square3 = new Platform[14]; 
 
-    tab_square3[0]= Platform(40, 15, {20, 7.5});
-    tab_square3[1]= Platform(35, 15, {72.5, 7.5});
+    tab_square3[0]= Platform(37, 25, {17.5, 2.5});
+    tab_square3[1]= Platform(32, 25, {78, 2.5});
     tab_square3[2]= Platform(20, 32.5, {160, 48.75});
-    tab_square3[3]= Platform(40, 27.5, {110, 13.75});
+    tab_square3[3]= Platform(36, 47.5, {112, 3.75});//110
     tab_square3[4]= Platform(50, 15, {105, 57.5});
     tab_square3[5]= Platform(80, 25, {40, 62.5});
     tab_square3[6]= Platform(10, 2.5, {145, 38.75});
     tab_square3[7]= Platform(30, 27.5, {205, 13.75});
     tab_square3[8]= Platform(10, 5, {175, 62.25});
-    tab_square3[9]= Platform(12.5, 2.5, {136, 53});
+    tab_square3[9]= Platform(11, 2.5, {135, 53});
     tab_square3[10]= Platform(30, 2.5, {160, 26.25}); 
     tab_square3[11]= Platform(20, 2.5, {190, 46.25});
-
     tab_square3[12]=Platform(5, 125, {1, 60});
+    tab_square3[13]=Platform(22, 170, {230, 58});
     Square background3 = Square(270, 140, {128, 57.5});
     background3.set_textID(Game_Environment::gentexture("images/level3.png"));
 
     //Création des niveaux
     Level* level1 = new Level(tab_square1, tab_character1, 16, 1, background1);
     Level* level2 = new Level(tab_square2, tab_character2, 10, 2, background2);
-    Level* level3 = new Level(tab_square3, tab_character3, 13, 3, background3); //bien penser à refaire un nouveau perso
+    Level* level3 = new Level(tab_square3, tab_character3, 14, 3, background3); //bien penser à refaire un nouveau perso
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ;
     tab_level[2] = level3 ;  
