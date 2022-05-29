@@ -17,7 +17,7 @@ Character::Character (int height, int width, float jumpforce, Position pos, Posi
     this->start_pos = pos;
     this->current_pos = pos;
     this->end_pos = final_pos;
-    this->acc = {0, -g*jumpforce};
+    this->acc = {0, (float)-g*jumpforce};
     this->speed = {0,0};
     this->keystate = SDL_GetKeyboardState(NULL);
     this->has_win = 0 ; 
