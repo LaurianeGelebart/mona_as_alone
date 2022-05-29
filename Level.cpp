@@ -10,6 +10,7 @@
 #include "Camera2D.h"
 #include "makeLevel.h"
 #include "gameEnv.h"
+#include "constants.h"
 
 Level::Level(Square* tab_square, Character* tab_character[], int nb_square, int nb_character, Square background)
 {
@@ -68,6 +69,9 @@ void Level::reset_level(){
     this->current_character = tab_character[this->selected_character]; 
     this->nb_character_end = 0 ;
     this->alpha = 0.0;
+    if(this->tab_character[0] == this->current_character ){
+        this->current_character->acc.y = -g;
+    }
     for (int i=0 ; i < this->nb_character; i++){
         (this->tab_character[i])->set_pos_x((this->tab_character[i])->get_start_pos().x); 
         (this->tab_character[i])->set_pos_y((this->tab_character[i])->get_start_pos().y); 
@@ -89,9 +93,6 @@ void Level::manageEvents(SDL_Event e)
 }
 
 void Level::verif_end_pos(){
-    printf("\nverif -- %d\n",  this->current_character->get_has_win() ); 
-    printf("\nend_pos -- %f - %f\n",  this->current_character->get_pos_end().x, this->current_character->get_pos_end().y ); 
-    printf("\npos -- %f - %f\n",  this->current_character->get_current_pos().x, this->current_character->get_current_pos().y ); 
     int c_posX = this->current_character->get_current_pos().x ; 
     int c_posY = this->current_character->get_current_pos().y ; 
     int e_posX = this->current_character->get_pos_end().x ; 
@@ -123,10 +124,11 @@ void Level::draw()
 
     this->current_character->draw_indice(this->alpha);
     
+    for (int i=0 ; i < this->nb_character; i++){       
+        this->tab_character[i]->get_end_zone().draw_endzone(this->tab_character[i]->get_has_win() );
+    }
     for (int i=0 ; i < this->nb_character; i++){
-        this->tab_character[i]->get_end_zone().draw_endzone();
-        this->tab_character[i]->draw_character(); 
-        
+        this->tab_character[i]->draw_character();  
     }
     for (int i=0 ; i<this->nb_square ; i++){
         this->tab_square[i].draw_square(); 
@@ -145,7 +147,7 @@ void Level::collisions(Character* chara){
             break ; 
             case 0:
                  chara->set_pos_y(this->tab_square[j].get_current_pos().y + this->tab_square[j].get_height()*0.5+chara->get_height()*0.5)  ;
-                 chara->set_speed_y(0);
+                 chara->set_speed_y(-chara->get_speed_y()*0.5);
                  chara->set_jump(0);          
             break;
             case 1:

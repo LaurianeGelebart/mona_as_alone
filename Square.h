@@ -18,7 +18,7 @@ class Square
 
     public:
         void draw_square();
-        void draw_endzone();
+        void draw_endzone(int filled) ;
         Position get_current_pos(); 
         Position get_right_upper_corner(); 
         Position get_right_lower_corner(); 

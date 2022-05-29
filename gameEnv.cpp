@@ -59,7 +59,6 @@ int Game_Environment::is_in_controls(){
 }
 
 void Game_Environment::is_win(){
-	printf("\n %d", ((Level*)this->get_current_scene())->get_nb_character_end()); 
 	if (((Level*)this->get_current_scene())->get_nb_character_end() == ((Level*)this->get_current_scene())->get_nb_character()){ 
 		this->change_to_win();
 	}
@@ -118,8 +117,6 @@ void Game_Environment::manageEvents(){
 			//Touche clavier
 			case SDL_KEYDOWN:
 
-				//printf("%p :: %p\n", this->menu, this->current_scene); //DEBUG
-
 				//Quitter le jeu --> l'utilisateur appuie sur Q ou Echap 
 				if (e.key.keysym.sym == SDLK_q)
 				{
@@ -132,7 +129,6 @@ void Game_Environment::manageEvents(){
 					if (choix==3){
 						this->change_to_controls();
 					}else {
-						printf("change level"); 
 						this->change_to_level(choix);
 					}
 				}

@@ -70,6 +70,10 @@ float Character::get_speed_y(){
     return this->speed.y;
 }
 
+float Character::get_jumpforce(){
+    return this->jumpforce;
+}
+
 bool Character::get_has_win(){
     return this->has_win;
 }
@@ -117,6 +121,8 @@ void Character::gravity(){
      if(this->current_pos.y < -50 -0.5*this->width || this->current_pos.y > 120 + 0.5*this->width)
     {
         this->current_pos = {5, 30}; 
+        this->set_speed_x(0);
+        this->set_speed_y(0) ; 
     }
 
 }
@@ -168,8 +174,7 @@ void Character::draw_indice(float alpha)
 
 void Character::manageEvents(SDL_Event e){
     if(e.type == SDL_KEYDOWN){
-        // printf("touche pressee (code = %d)\n", e.key.keysym.sym);
-        if (e.key.keysym.sym == SDLK_UP && !this->in_jump)
+       if (e.key.keysym.sym == SDLK_UP && !this->in_jump)
         {   
            if (this->jumpforce==1 && is_switch_gravity()){
                 this->jump(-70);
@@ -180,7 +185,7 @@ void Character::manageEvents(SDL_Event e){
             this->in_jump = true;
         }
        
-        //échange la gravité du premier personnage si on appuie sur g
+        //inverse la gravité du premier personnage si on appuie sur g
         if (e.key.keysym.sym == SDLK_g)
         {
             if (this->jumpforce==1){

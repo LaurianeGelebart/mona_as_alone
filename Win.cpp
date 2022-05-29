@@ -7,7 +7,7 @@
 
 Win::Win(){
 
-    this->background = Square(205, 105, {100, 50});
+    this->background = Square(205, 105, {96, 50});
     this->background.set_textID(Game_Environment::gentexture("images/bravo.png"));
 }
 

@@ -37,9 +37,19 @@ void Square::draw_square()
     
 }
 
-void Square::draw_endzone() 
-{   glLineWidth(3);
-    glBegin(GL_LINE_LOOP);
+void Square::draw_endzone(int filled) 
+{  
+     glLineWidth(3);
+
+    if(filled)
+    {
+        glBegin(GL_QUADS);
+    }
+    else
+    {
+        glBegin(GL_LINE_LOOP);
+    }
+
         float tab_pos[4]; 
 
         glPushMatrix();
@@ -55,7 +65,6 @@ void Square::draw_endzone()
         glVertex2f(tab_pos[1],tab_pos[3]);
         glVertex2f(tab_pos[1],tab_pos[2]);
         glVertex2f(tab_pos[0],tab_pos[2]);
-        
         
         glPushMatrix();
             glColor3f(1, 1, 1);

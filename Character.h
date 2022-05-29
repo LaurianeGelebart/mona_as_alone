@@ -14,6 +14,8 @@ class Character : public Square
         const Uint8* keystate;
         bool has_win ; 
         Square end_zone ; 
+        float jumpforce;
+        bool in_jump;
     
     public : 
         Character(int height, int width, float jumpforce, Position pos, Position final_pos); 
@@ -35,14 +37,13 @@ class Character : public Square
         float get_speed_y();
         bool get_has_win();
         bool get_isjumping();
+        float get_jumpforce();
         void switch_gravity();
         bool is_switch_gravity();
         Square get_end_zone();
         void set_end_zone(Position pos);
-        bool in_jump;
         Vect speed;
         Vect acc;
-        float jumpforce;
         
 };
 
