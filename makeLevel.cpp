@@ -87,8 +87,8 @@ void makeLevel(Level** tab_level,Character** tab_character ){
     tab_level[0] = level1 ;   
     tab_level[1] = level2 ;
     tab_level[2] = level3 ; 
-    level1->quadtree = quadtree1;
+    /*level1->quadtree = quadtree1;
     level2->quadtree = quadtree2; 
-    level3->quadtree = quadtree3;
+    level3->quadtree = quadtree3;*/
     //////////////////////////////////////////
 }

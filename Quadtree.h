@@ -1,7 +1,7 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 
-#include <vector>
+#include <list>
 #include "Character.h"
 #include "Platform.h"
 #include "Scene.h"
@@ -16,27 +16,22 @@ struct SquareCorner {
 
 struct Node{
     SquareCorner square;
-    Square _objects[30];
+    std::list<Platform> block_list;
     Node *topleft=nullptr;
     Node *botleft=nullptr;
     Node *topright=nullptr;
     Node *botright=nullptr;
-    int nb_object; 
 };
 
-class Quadtree
-{    
-    public:
-    Node* init_quadtree(float width, float height, Square* tab_square, int nb_square);
-    void addNode(Node* quadtree);
-    bool is_leaf(Node* node);
-    Node* is_inside();
-    void object_inside(Node* child, Square object_parent[30], int nb_object_parent);
-    bool test_corner(Position pos, Node* child);
-    Node* test_corner_recursive(Position pos, Node* node);
-    void make_quadtree(Node* quadtree);
-    //bool compare_leaf(Node* first, Node* second);
-    //void get_four_leaves(Position pos, Node* node);
-};
+void addNode(Node* quadtree);
+void make_quadtree(Node* quadtree);
+bool is_leaf(Node* node);
+bool test_corner(Position pos, Node* child);
+Node* is_inside();
+Node* test_corner_recursive(Position pos, Node* node);
+Node* init_quadtree(float width, float height, Platform* tab_square, int nb_square);
+std::list<Platform> blocks_inside(Node* child, std::list<Platform> list);
+std::list<Platform> get_blocks_in_zone(Character* chara, Node* node);
+
 
 #endif

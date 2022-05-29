@@ -130,13 +130,6 @@ void Level::draw()
     
 }
 
-/*void Level::check_inside_zone(int nb_square, Square* tab_square, Node* quadtree){
-
-    if(Quadtree::is_leaf() && Quadtree::is_inside()){
-        
-    }
-}*/
-
 void Level::collisions(Character* chara){
 
     //Node node = Quadtree::test_corner_recursive(chara->get_current_pos(),this->quadtree);
